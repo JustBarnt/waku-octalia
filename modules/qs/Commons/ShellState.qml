@@ -266,7 +266,7 @@ Singleton {
         settings: settingsData,
         state: {
           doNotDisturb: NotificationService.doNotDisturb,
-          noctaliaPerformanceMode: PowerProfileService.noctaliaPerformanceMode,
+          octaliaPerformanceMode: PowerProfileService.octaliaPerformanceMode,
           barVisible: BarService.isVisible,
           openedPanel: PanelService.openedPanel?.objectName || "",
           lockScreenActive: PanelService.lockScreen?.active || false,

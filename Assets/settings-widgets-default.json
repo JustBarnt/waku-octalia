@@ -19,7 +19,7 @@
       "displayMode": "graphic-clean",
       "deviceNativePath": "__default__",
       "showPowerProfiles": false,
-      "showNoctaliaPerformance": false,
+      "showOctaliaPerformance": false,
       "hideIfNotDetected": true,
       "hideIfIdle": false
     },
@@ -44,7 +44,7 @@
     },
     "ControlCenter": {
       "useDistroLogo": false,
-      "icon": "noctalia",
+      "icon": "octalia",
       "customIconPath": "",
       "colorizeDistroLogo": false,
       "colorizeSystemIcon": "none",
@@ -205,7 +205,7 @@
     "NightLight": {
       "iconColor": "none"
     },
-    "NoctaliaPerformance": {
+    "OctaliaPerformance": {
       "iconColor": "none"
     },
     "PowerProfile": {

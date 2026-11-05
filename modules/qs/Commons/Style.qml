@@ -73,8 +73,8 @@ Singleton {
   readonly property real opacityAlmost: 0.95
   readonly property real opacityFull: 1.0
 
-  readonly property real effectivePanelOpacity: PowerProfileService.noctaliaPerformanceMode ? 1.0 : Color.adaptiveOpacity(Settings.data.ui.panelBackgroundOpacity)
-  readonly property real effectiveBarOpacity: PowerProfileService.noctaliaPerformanceMode ? 1.0 : Settings.data.bar.backgroundOpacity
+  readonly property real effectivePanelOpacity: PowerProfileService.octaliaPerformanceMode ? 1.0 : Color.adaptiveOpacity(Settings.data.ui.panelBackgroundOpacity)
+  readonly property real effectiveBarOpacity: PowerProfileService.octaliaPerformanceMode ? 1.0 : Settings.data.bar.backgroundOpacity
 
   // Shadows
   readonly property real shadowOpacity: 0.85
@@ -84,11 +84,11 @@ Singleton {
   readonly property real shadowVerticalOffset: Settings.data.general.shadowOffsetY
 
   // Animation duration (ms)
-  readonly property int animationFaster: (Settings.data.general.animationDisabled || PowerProfileService.noctaliaPerformanceMode) ? 0 : Math.round(75 / Settings.data.general.animationSpeed)
-  readonly property int animationFast: (Settings.data.general.animationDisabled || PowerProfileService.noctaliaPerformanceMode) ? 0 : Math.round(150 / Settings.data.general.animationSpeed)
-  readonly property int animationNormal: (Settings.data.general.animationDisabled || PowerProfileService.noctaliaPerformanceMode) ? 0 : Math.round(300 / Settings.data.general.animationSpeed)
-  readonly property int animationSlow: (Settings.data.general.animationDisabled || PowerProfileService.noctaliaPerformanceMode) ? 0 : Math.round(450 / Settings.data.general.animationSpeed)
-  readonly property int animationSlowest: (Settings.data.general.animationDisabled || PowerProfileService.noctaliaPerformanceMode) ? 0 : Math.round(750 / Settings.data.general.animationSpeed)
+  readonly property int animationFaster: (Settings.data.general.animationDisabled || PowerProfileService.octaliaPerformanceMode) ? 0 : Math.round(75 / Settings.data.general.animationSpeed)
+  readonly property int animationFast: (Settings.data.general.animationDisabled || PowerProfileService.octaliaPerformanceMode) ? 0 : Math.round(150 / Settings.data.general.animationSpeed)
+  readonly property int animationNormal: (Settings.data.general.animationDisabled || PowerProfileService.octaliaPerformanceMode) ? 0 : Math.round(300 / Settings.data.general.animationSpeed)
+  readonly property int animationSlow: (Settings.data.general.animationDisabled || PowerProfileService.octaliaPerformanceMode) ? 0 : Math.round(450 / Settings.data.general.animationSpeed)
+  readonly property int animationSlowest: (Settings.data.general.animationDisabled || PowerProfileService.octaliaPerformanceMode) ? 0 : Math.round(750 / Settings.data.general.animationSpeed)
 
   // Delays
   readonly property int pillDelay: 500

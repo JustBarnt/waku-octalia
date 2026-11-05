@@ -12,7 +12,7 @@ import waku as W
 Singleton {
   id: root
 
-  // Width of the wallpaper thumbnails. It matches the Caelestia port, so both shells share the
+  // Width of the wallpaper thumbnails. It matches the Celeste port, so both shells share the
   // engine's disk cache.
   readonly property int thumbnailWidth: 640
 
@@ -519,7 +519,7 @@ Singleton {
     implicitWidth: 0
     implicitHeight: 0
     WlrLayershell.exclusionMode: ExclusionMode.Ignore
-    WlrLayershell.namespace: "noctalia-image-cache-renderer"
+    WlrLayershell.namespace: "octalia-image-cache-renderer"
     color: "transparent"
     mask: Region {}
 

@@ -9,13 +9,13 @@ param(
   [string]$Bin = $(if ($env:WAKU_BIN) { $env:WAKU_BIN } else { Join-Path $PSScriptRoot '..\bin' })
 )
 $ErrorActionPreference = 'Stop'
-# Noctalia reads its config and cache dirs from these; keep them inside the port. HOME is only read
+# Octalia reads its config and cache dirs from these; keep them inside the port. HOME is only read
 # (default wallpaper and video folders).
 $portRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
-$env:NOCTALIA_CONFIG_DIR = Join-Path $portRoot 'state\config'
-$env:NOCTALIA_CACHE_DIR = Join-Path $portRoot 'state\cache'
+$env:OCTALIA_CONFIG_DIR = Join-Path $portRoot 'state\config'
+$env:OCTALIA_CACHE_DIR = Join-Path $portRoot 'state\cache'
 $env:HOME = $env:USERPROFILE
-New-Item -ItemType Directory -Force $env:NOCTALIA_CONFIG_DIR, $env:NOCTALIA_CACHE_DIR | Out-Null
+New-Item -ItemType Directory -Force $env:OCTALIA_CONFIG_DIR, $env:OCTALIA_CACHE_DIR | Out-Null
 $env:QT_FORCE_STDERR_LOGGING = '1' # Qt writes qml: messages to stderr only with this
 $port = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 $logs = Join-Path $port 'logs'

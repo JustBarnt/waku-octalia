@@ -1,7 +1,7 @@
 pragma Singleton
 import Quickshell
 
-// What Noctalia does with `mkdir -p`, `rm`, `wl-copy` and `xdg-open`, on Windows. Paths may use
+// What Octalia does with `mkdir -p`, `rm`, `wl-copy` and `xdg-open`, on Windows. Paths may use
 // either slash; cmd.exe needs backslashes.
 Singleton {
     function win(path) {

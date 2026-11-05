@@ -42,8 +42,8 @@ Singleton {
   property string wallpaperCacheFile: ""
 
   readonly property bool scanning: (scanningCount > 0)
-  readonly property string noctaliaDefaultWallpaper: ShellUrl.dir + "/Assets/Wallpaper/noctalia.png"
-  property string defaultWallpaper: noctaliaDefaultWallpaper
+  readonly property string octaliaDefaultWallpaper: ShellUrl.dir + "/Assets/Wallpaper/octalia.png"
+  property string defaultWallpaper: octaliaDefaultWallpaper
 
   // Signals for reactive UI updates
   signal wallpaperChanged(string screenName, string path)
@@ -251,7 +251,7 @@ Singleton {
 
   // -------------------------------------------------
   // The wallpaper itself belongs to Windows: every choice is handed to waku's Wallpapers service,
-  // which sets it on all monitors with no transition. Noctalia keeps its own record (the cache file)
+  // which sets it on all monitors with no transition. Octalia keeps its own record (the cache file)
   // for the picker, the favorites and the colour generation. Windows has one wallpaper, so the
   // first screen's choice is the one that is applied. With WAKU_WALLPAPER_DRYRUN=1 the service only
   // logs "Wallpapers: dry run, not setting <path>".
@@ -1742,7 +1742,7 @@ Singleton {
   Timer {
     id: randomWallpaperTimer
     interval: Settings.data.wallpaper.randomIntervalSec * 1000
-    running: Settings.data.wallpaper.automationEnabled && !PowerProfileService.noctaliaPerformanceMode
+    running: Settings.data.wallpaper.automationEnabled && !PowerProfileService.octaliaPerformanceMode
     repeat: true
     onTriggered: setNextWallpaper()
     triggeredOnStart: false
@@ -1759,7 +1759,7 @@ Singleton {
     adapter: JsonAdapter {
       id: wallpaperCacheAdapter
       property var wallpapers: ({})
-      property string defaultWallpaper: root.noctaliaDefaultWallpaper
+      property string defaultWallpaper: root.octaliaDefaultWallpaper
       property var usedRandomWallpapers: ({})
     }
 
@@ -1775,13 +1775,13 @@ Singleton {
         root._syncWallpaperSlotsWhenLinking();
       }
 
-      // Load default wallpaper from cache if it exists, otherwise use Noctalia default
+      // Load default wallpaper from cache if it exists, otherwise use Octalia default
       if (wallpaperCacheAdapter.defaultWallpaper && wallpaperCacheAdapter.defaultWallpaper !== "") {
         root.defaultWallpaper = wallpaperCacheAdapter.defaultWallpaper;
         Logger.d("Wallpaper", "Loaded default wallpaper from cache:", wallpaperCacheAdapter.defaultWallpaper);
       } else {
-        root.defaultWallpaper = root.noctaliaDefaultWallpaper;
-        Logger.d("Wallpaper", "Using Noctalia default wallpaper");
+        root.defaultWallpaper = root.octaliaDefaultWallpaper;
+        Logger.d("Wallpaper", "Using Octalia default wallpaper");
       }
 
       Logger.d("Wallpaper", "Loaded wallpapers from cache file:", Object.keys(root.currentWallpapers).length, "screens");

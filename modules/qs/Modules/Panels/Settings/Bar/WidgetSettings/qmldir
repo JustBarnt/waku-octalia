@@ -16,7 +16,7 @@ MediaMiniSettings 1.0 MediaMiniSettings.qml
 MicrophoneSettings 1.0 MicrophoneSettings.qml
 NetworkSettings 1.0 NetworkSettings.qml
 NightLightSettings 1.0 NightLightSettings.qml
-NoctaliaPerformanceSettings 1.0 NoctaliaPerformanceSettings.qml
+OctaliaPerformanceSettings 1.0 OctaliaPerformanceSettings.qml
 NotificationHistorySettings 1.0 NotificationHistorySettings.qml
 PowerProfileSettings 1.0 PowerProfileSettings.qml
 SessionMenuSettings 1.0 SessionMenuSettings.qml

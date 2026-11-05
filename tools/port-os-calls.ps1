@@ -1,4 +1,4 @@
-# Replaces Linux commands in the Noctalia QML with calls to qs.compat Os. Idempotent.
+# Replaces Linux commands in the Octalia QML with calls to qs.compat Os. Idempotent.
 $root = Join-Path $PSScriptRoot '..\modules\qs'
 $utf8 = New-Object Text.UTF8Encoding $false; $n = 0; $edits = 0
 Get-ChildItem $root -Recurse -Filter *.qml | Where-Object { $_.DirectoryName -notmatch '\compat$' } | ForEach-Object {

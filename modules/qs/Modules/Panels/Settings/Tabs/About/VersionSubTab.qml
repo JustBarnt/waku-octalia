@@ -5,7 +5,7 @@ import Quickshell
 import Quickshell.Io
 import qs.Commons
 import qs.Services.Compositor
-import qs.Services.Noctalia
+import qs.Services.Octalia
 import qs.Services.System
 import qs.Services.UI
 import qs.Widgets
@@ -66,7 +66,7 @@ ColumnLayout {
   }
 
   function copyInfoToClipboard() {
-    let info = "Noctalia Shell: " + root.currentVersion;
+    let info = "Octalia Shell: " + root.currentVersion;
     if (root.isGitVersion && root.commitInfo) {
       info += " (" + root.commitInfo + ")";
     }
@@ -74,7 +74,7 @@ ColumnLayout {
 
     if (root.qsVersion) {
       let qsV = root.qsVersion.startsWith("v") ? root.qsVersion : "v" + root.qsVersion;
-      info += "Noctalia QS: " + qsV;
+      info += "Octalia QS: " + qsV;
       if (root.qsRevision) {
         info += " (" + root.qsRevision + ")";
       }
@@ -144,9 +144,9 @@ ColumnLayout {
     Layout.alignment: Qt.AlignHCenter
     spacing: Style.marginXL
 
-    // Noctalia logo
+    // Octalia logo
     Image {
-      source: ShellUrl.dir + "/Assets/noctalia.svg"
+      source: ShellUrl.dir + "/Assets/octalia.svg"
       width: 96 * Style.uiScaleRatio
       height: width
       fillMode: Image.PreserveAspectFit
@@ -195,7 +195,7 @@ ColumnLayout {
 
     ColumnLayout {
       NHeader {
-        label: "Noctalia Shell"
+        label: "Octalia Shell"
       }
 
       // Versions
@@ -206,7 +206,7 @@ ColumnLayout {
 
         // Installed Version (Shell)
         NText {
-          text: "Noctalia Shell:"
+          text: "Octalia Shell:"
           color: Color.mOnSurfaceVariant
           Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
         }
@@ -263,7 +263,7 @@ ColumnLayout {
         // Latest Version (Shell)
         NText {
           visible: root.updateAvailable
-          text: I18n.tr("panels.about.noctalia-available")
+          text: I18n.tr("panels.about.octalia-available")
           color: Color.mOnSurfaceVariant
           Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
         }
@@ -285,7 +285,7 @@ ColumnLayout {
         // Quickshell Version
         NText {
           visible: root.qsVersion !== ""
-          text: "Noctalia QS:"
+          text: "Octalia QS:"
           color: Color.mOnSurfaceVariant
           Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
         }
@@ -341,7 +341,7 @@ ColumnLayout {
         // Latest Quickshell Version
         NText {
           visible: root.qsUpdateAvailable
-          text: I18n.tr("panels.about.noctalia-available")
+          text: I18n.tr("panels.about.octalia-available")
           color: Color.mOnSurfaceVariant
           Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
         }

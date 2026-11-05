@@ -1,4 +1,4 @@
-# Removes `<Type> { id: <Id> ... }` blocks (brace matched) from a file. Used for noctalia-qs blur regions
+# Removes `<Type> { id: <Id> ... }` blocks (brace matched) from a file. Used for octalia-qs blur regions
 # (Type Region) and for Linux-only Process blocks (Type Process).
 param([Parameter(Mandatory)][string]$File, [Parameter(Mandatory)][string[]]$Ids, [string]$Type = 'Region')
 $t = [IO.File]::ReadAllText($File)

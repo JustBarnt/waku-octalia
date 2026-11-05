@@ -10,7 +10,7 @@ import qs.Services.UI
 * The bar background and the panels are painted by MainScreen. The widgets used to sit in a second
 * window above it, and waku raised whichever Top window was shown or focused last, so MainScreen
 * covered the widgets whenever a panel opened (they flickered or stopped reacting). Drawing them in
-* the same window fixes their stacking by construction, as in Caelestia's drawers.
+* the same window fixes their stacking by construction, as in Celeste's drawers.
 *
 * Instantiated once per screen by MainScreen, which gives it the bar's geometry.
 */

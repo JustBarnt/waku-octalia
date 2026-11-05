@@ -5,9 +5,9 @@ param([string]$Bin = (Join-Path $PSScriptRoot '..\bin'), [int]$MaxSeconds = 60)
 $ErrorActionPreference = 'Stop'
 $env:QT_FORCE_STDERR_LOGGING = '1'
 $port = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
-$env:NOCTALIA_CONFIG_DIR = Join-Path $port 'state\config'; $env:NOCTALIA_CACHE_DIR = Join-Path $port 'state\cache'
+$env:OCTALIA_CONFIG_DIR = Join-Path $port 'state\config'; $env:OCTALIA_CACHE_DIR = Join-Path $port 'state\cache'
 $env:HOME = $env:USERPROFILE
-New-Item -ItemType Directory -Force $env:NOCTALIA_CONFIG_DIR, $env:NOCTALIA_CACHE_DIR | Out-Null
+New-Item -ItemType Directory -Force $env:OCTALIA_CONFIG_DIR, $env:OCTALIA_CACHE_DIR | Out-Null
 $home_ = Join-Path $port 'smoke\livecheck2'
 $wc = Join-Path $Bin 'wakuc.exe'
 $existing = (& $wc --config-home $home_ status 2>&1 | Out-String)

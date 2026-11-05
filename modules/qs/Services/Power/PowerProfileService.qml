@@ -15,7 +15,7 @@ Singleton {
   property int profile: powerProfiles ? powerProfiles.profile : PowerProfile.Balanced
 
   // Not a power profile but a volatile property to quickly disable shadows, animations, etc..
-  property bool noctaliaPerformanceMode: false
+  property bool octaliaPerformanceMode: false
 
   function getName(p) {
     if (!available)
@@ -111,23 +111,23 @@ Singleton {
     }
   }
 
-  // Noctalia Performance Mode
+  // Octalia Performance Mode
   // - Turning shadow off
   // - Turning animation off
   // - Do Not Disturb
-  function toggleNoctaliaPerformance() {
-    noctaliaPerformanceMode = !noctaliaPerformanceMode;
+  function toggleOctaliaPerformance() {
+    octaliaPerformanceMode = !octaliaPerformanceMode;
   }
 
-  function setNoctaliaPerformance(value) {
-    noctaliaPerformanceMode = value;
+  function setOctaliaPerformance(value) {
+    octaliaPerformanceMode = value;
   }
 
-  onNoctaliaPerformanceModeChanged: {
-    if (noctaliaPerformanceMode) {
-      ToastService.showNotice(I18n.tr("toast.noctalia-performance.label"), I18n.tr("toast.noctalia-performance.enabled"), "rocket");
+  onOctaliaPerformanceModeChanged: {
+    if (octaliaPerformanceMode) {
+      ToastService.showNotice(I18n.tr("toast.octalia-performance.label"), I18n.tr("toast.octalia-performance.enabled"), "rocket");
     } else {
-      ToastService.showNotice(I18n.tr("toast.noctalia-performance.label"), I18n.tr("toast.noctalia-performance.disabled"), "rocket-off");
+      ToastService.showNotice(I18n.tr("toast.octalia-performance.label"), I18n.tr("toast.octalia-performance.disabled"), "rocket-off");
     }
   }
 }

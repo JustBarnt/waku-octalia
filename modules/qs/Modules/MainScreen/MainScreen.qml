@@ -44,7 +44,7 @@ PanelWindow {
   }
 
   WlrLayershell.layer: WlrLayer.Top
-  WlrLayershell.namespace: "noctalia-background-" + (screen?.name || "unknown")
+  WlrLayershell.namespace: "octalia-background-" + (screen?.name || "unknown")
   WlrLayershell.exclusionMode: ExclusionMode.Ignore // Don't reserve space - BarExclusionZone handles that
   WlrLayershell.keyboardFocus: {
     // No panel open anywhere: no keyboard focus needed
@@ -116,7 +116,7 @@ PanelWindow {
     return monitors.length === 0 || monitors.includes(screenName);
   }
 
-  // Click mask, built like Caelestia's drawers: the window is click-through except where a Subtract
+  // Click mask, built like Celeste's drawers: the window is click-through except where a Subtract
   // child punches the root rectangle (the mask is `window XOR root`). The bar area is punched, so the
   // bar widgets inside this window take clicks; with a panel open the whole window is punched, so a
   // click outside the panel reaches the click-to-close area. All children are direct children of the

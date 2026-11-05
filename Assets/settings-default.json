@@ -284,7 +284,7 @@
           "id": "WallpaperSelector"
         },
         {
-          "id": "NoctaliaPerformance"
+          "id": "OctaliaPerformance"
         }
       ],
       "right": [
@@ -352,7 +352,7 @@
     "criticalColor": "",
     "externalMonitor": "resources || missioncenter || jdsystemmonitor || corestats || system-monitoring-center || gnome-system-monitor || plasma-systemmonitor || mate-system-monitor || ukui-system-monitor || deepin-system-monitor || pantheon-system-monitor"
   },
-  "noctaliaPerformance": {
+  "octaliaPerformance": {
     "disableWallpaper": true,
     "disableDesktopWidgets": true
   },
@@ -506,7 +506,7 @@
   },
   "colorSchemes": {
     "useWallpaperColors": false,
-    "predefinedScheme": "Noctalia (default)",
+    "predefinedScheme": "Octalia (default)",
     "darkMode": true,
     "schedulingMode": "off",
     "manualSunrise": "06:30",

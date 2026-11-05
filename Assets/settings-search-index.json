@@ -1123,8 +1123,8 @@
     "subTabLabel": "common.general"
   },
   {
-    "labelKey": "panels.hooks.noctalia-started-label",
-    "descriptionKey": "panels.hooks.noctalia-started-description",
+    "labelKey": "panels.hooks.octalia-started-label",
+    "descriptionKey": "panels.hooks.octalia-started-description",
     "widget": "HookRow",
     "tab": 18,
     "tabLabel": "panels.hooks.title",
@@ -1819,8 +1819,8 @@
     "subTabLabel": "system-monitor.title"
   },
   {
-    "labelKey": "panels.system.noctalia-performance-disable-wallpaper-label",
-    "descriptionKey": "panels.system.noctalia-performance-disable-wallpaper-description",
+    "labelKey": "panels.system.octalia-performance-disable-wallpaper-label",
+    "descriptionKey": "panels.system.octalia-performance-disable-wallpaper-description",
     "widget": "NToggle",
     "tab": 17,
     "tabLabel": "panels.system.title",
@@ -1828,8 +1828,8 @@
     "subTabLabel": "common.performance"
   },
   {
-    "labelKey": "panels.system.noctalia-performance-disable-desktop-widgets-label",
-    "descriptionKey": "panels.system.noctalia-performance-disable-desktop-widgets-description",
+    "labelKey": "panels.system.octalia-performance-disable-desktop-widgets-label",
+    "descriptionKey": "panels.system.octalia-performance-disable-desktop-widgets-description",
     "widget": "NToggle",
     "tab": 17,
     "tabLabel": "panels.system.title",

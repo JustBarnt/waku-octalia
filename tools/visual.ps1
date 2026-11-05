@@ -1,4 +1,4 @@
-# Starts Noctalia on its own config home, lists IPC targets, opens panels through `wakuc call`
+# Starts Octalia on its own config home, lists IPC targets, opens panels through `wakuc call`
 # and takes a screenshot of each. Shots hold the full desktop (private): keep them in shots\.
 param(
   [string]$Bin = $(if ($env:WAKU_BIN) { $env:WAKU_BIN } else { Join-Path $PSScriptRoot '..\bin' }),
@@ -7,8 +7,8 @@ param(
 )
 $ErrorActionPreference = 'Stop'
 $port = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
-$env:NOCTALIA_CONFIG_DIR = Join-Path $port 'state\config'
-$env:NOCTALIA_CACHE_DIR = Join-Path $port 'state\cache'
+$env:OCTALIA_CONFIG_DIR = Join-Path $port 'state\config'
+$env:OCTALIA_CACHE_DIR = Join-Path $port 'state\cache'
 $env:HOME = $env:USERPROFILE
 $env:QT_FORCE_STDERR_LOGGING = '1'
 $logs = Join-Path $port 'logs'; New-Item -ItemType Directory -Force $logs | Out-Null

@@ -27,7 +27,7 @@ Singleton {
                            "MediaMini": mediaMiniComponent,
                            "Microphone": microphoneComponent,
                            "Network": networkComponent,
-                           "NoctaliaPerformance": noctaliaPerformanceComponent,
+                           "OctaliaPerformance": octaliaPerformanceComponent,
                            "NotificationHistory": notificationHistoryComponent,
                            "PowerProfile": powerProfileComponent,
                            "SessionMenu": sessionMenuComponent,
@@ -58,7 +58,7 @@ Singleton {
                                      "MediaMini": "WidgetSettings/MediaMiniSettings.qml",
                                      "Microphone": "WidgetSettings/MicrophoneSettings.qml",
                                      "Network": "WidgetSettings/NetworkSettings.qml",
-                                     "NoctaliaPerformance": "WidgetSettings/NoctaliaPerformanceSettings.qml",
+                                     "OctaliaPerformance": "WidgetSettings/OctaliaPerformanceSettings.qml",
                                      "NotificationHistory": "WidgetSettings/NotificationHistorySettings.qml",
                                      "PowerProfile": "WidgetSettings/PowerProfileSettings.qml",
                                      "SessionMenu": "WidgetSettings/SessionMenuSettings.qml",
@@ -91,7 +91,7 @@ Singleton {
                                     "displayMode": "graphic-clean",
                                     "deviceNativePath": "__default__",
                                     "showPowerProfiles": false,
-                                    "showNoctaliaPerformance": false,
+                                    "showOctaliaPerformance": false,
                                     "hideIfNotDetected": true,
                                     "hideIfIdle": false
                                   },
@@ -115,7 +115,7 @@ Singleton {
                                   },
                                   "ControlCenter": {
                                     "useDistroLogo": false,
-                                    "icon": "noctalia",
+                                    "icon": "octalia",
                                     "customIconPath": "",
                                     "colorizeDistroLogo": false,
                                     "colorizeSystemIcon": "none",
@@ -271,7 +271,7 @@ Singleton {
                                     "iconColor": "none",
                                     "textColor": "none"
                                   },
-                                  "NoctaliaPerformance": {
+                                  "OctaliaPerformance": {
                                     "iconColor": "none"
                                   },
                                   "PowerProfile": {
@@ -351,8 +351,8 @@ Singleton {
   property Component microphoneComponent: Component {
     Microphone {}
   }
-  property Component noctaliaPerformanceComponent: Component {
-    NoctaliaPerformance {}
+  property Component octaliaPerformanceComponent: Component {
+    OctaliaPerformance {}
   }
   property Component notificationHistoryComponent: Component {
     NotificationHistory {}

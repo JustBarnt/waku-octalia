@@ -197,7 +197,7 @@ Singleton {
     } else if (stage === "lock") {
       if (Settings.data.idle.lockCommand)
         Quickshell.execDetached(["cmd", "/c", Settings.data.idle.lockCommand]);
-      // Windows: no Noctalia lock screen; a custom lock command replaces the default
+      // Windows: no Octalia lock screen; a custom lock command replaces the default
       if (!Settings.data.idle.lockCommand)
         CompositorService.lock();
       root.lockRequested();

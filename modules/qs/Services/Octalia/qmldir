@@ -1,4 +1,4 @@
-module qs.Services.Noctalia
+module qs.Services.Octalia
 singleton GitHubService 1.0 GitHubService.qml
 singleton SupporterService 1.0 SupporterService.qml
 singleton TelemetryService 1.0 TelemetryService.qml

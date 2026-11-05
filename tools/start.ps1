@@ -2,4 +2,4 @@
 # points here keeps working.
 param([string]$Waku, [switch]$Dev, [switch]$DryRun)
 $extra = @{}; if ($Waku) { $extra.Waku = $Waku }
-& (Join-Path $PSScriptRoot '..\..\start.ps1') -Port noctalia @extra -Dev:$Dev -DryRun:$DryRun
+& (Join-Path $PSScriptRoot '..\..\start.ps1') -Port octalia @extra -Dev:$Dev -DryRun:$DryRun

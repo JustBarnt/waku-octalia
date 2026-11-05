@@ -14,7 +14,7 @@ Singleton {
   readonly property string defaultIcon: IconsTabler.defaultIcon
   readonly property var icons: IconsTabler.icons
   readonly property var aliases: IconsTabler.aliases
-  readonly property string fontPath: "/Assets/Fonts/tabler/noctalia-tabler-icons.ttf"
+  readonly property string fontPath: "/Assets/Fonts/tabler/octalia-tabler-icons.ttf"
 
   // Current active font loader
   property FontLoader currentFontLoader: null

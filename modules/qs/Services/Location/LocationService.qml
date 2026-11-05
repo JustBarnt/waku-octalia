@@ -10,7 +10,7 @@ import qs.compat
 Singleton {
   id: root
 
-  property string locationFile: Quickshell.env("NOCTALIA_WEATHER_FILE") || (Settings.cacheDir + "location.json")
+  property string locationFile: Quickshell.env("OCTALIA_WEATHER_FILE") || (Settings.cacheDir + "location.json")
   property int weatherUpdateFrequency: 30 * 60
   property bool isFetchingWeather: false
 
@@ -262,7 +262,7 @@ Singleton {
     xhr.send();
   }
 
-  // Geolocate via IP address using the Noctalia API
+  // Geolocate via IP address using the Octalia API
   function geolocate(callback, errorCallback) {
     Logger.d("Location", "Geolocating via IP");
     var url = "https://api.noctalia.dev/geolocate";

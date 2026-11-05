@@ -7,7 +7,7 @@ import "../Helpers/QtObj2JS.js" as QtObj2JS
 import qs.Commons
 import qs.Commons.Migrations
 import qs.Modules.OSD
-import qs.Services.Noctalia
+import qs.Services.Octalia
 import qs.Services.UI
 import qs.compat
 
@@ -22,17 +22,17 @@ Singleton {
 
   /*
   Shell directories.
-  - Default config directory: ~/.config/noctalia
-  - Default cache directory: ~/.cache/noctalia
+  - Default config directory: ~/.config/octalia
+  - Default cache directory: ~/.cache/octalia
   */
   readonly property alias data: adapter  // Used to access via Settings.data.xxx.yyy
   readonly property int settingsVersion: 59
-  property bool isDebug: Quickshell.env("NOCTALIA_DEBUG") === "1"
-  readonly property string shellName: "noctalia"
-  readonly property string configDir: ensureTrailingSlash(Quickshell.env("NOCTALIA_CONFIG_DIR") || (Quickshell.env("XDG_CONFIG_HOME") || Quickshell.env("HOME") + "/.config") + "/" + shellName + "/")
-  readonly property string cacheDir: ensureTrailingSlash(Quickshell.env("NOCTALIA_CACHE_DIR") || (Quickshell.env("XDG_CACHE_HOME") || Quickshell.env("HOME") + "/.cache") + "/" + shellName + "/")
+  property bool isDebug: Quickshell.env("OCTALIA_DEBUG") === "1"
+  readonly property string shellName: "octalia"
+  readonly property string configDir: ensureTrailingSlash(Quickshell.env("OCTALIA_CONFIG_DIR") || (Quickshell.env("XDG_CONFIG_HOME") || Quickshell.env("HOME") + "/.config") + "/" + shellName + "/")
+  readonly property string cacheDir: ensureTrailingSlash(Quickshell.env("OCTALIA_CACHE_DIR") || (Quickshell.env("XDG_CACHE_HOME") || Quickshell.env("HOME") + "/.cache") + "/" + shellName + "/")
 
-  readonly property string settingsFile: Quickshell.env("NOCTALIA_SETTINGS_FILE") || (configDir + "settings.json")
+  readonly property string settingsFile: Quickshell.env("OCTALIA_SETTINGS_FILE") || (configDir + "settings.json")
   readonly property string defaultAvatar: Quickshell.env("HOME") + "/.face"
   readonly property string defaultVideosDirectory: Quickshell.env("HOME") + "/Videos"
   readonly property string defaultWallpapersDirectory: Quickshell.env("HOME") + "/.config/wallpapers"
@@ -499,7 +499,7 @@ Singleton {
             "id": "WallpaperSelector"
           },
           {
-            "id": "NoctaliaPerformance"
+            "id": "OctaliaPerformance"
           }
         ]
         property list<var> right: [
@@ -568,7 +568,7 @@ Singleton {
     }
 
     // performance
-    property JsonObject noctaliaPerformance: JsonObject {
+    property JsonObject octaliaPerformance: JsonObject {
       property bool disableWallpaper: true
       property bool disableDesktopWidgets: true
     }
@@ -734,7 +734,7 @@ Singleton {
 
     property JsonObject colorSchemes: JsonObject {
       property bool useWallpaperColors: false
-      property string predefinedScheme: "Noctalia (default)"
+      property string predefinedScheme: "Octalia (default)"
       property bool darkMode: true
       property string schedulingMode: "off"
       property string manualSunrise: "06:30"
@@ -1065,7 +1065,7 @@ Singleton {
 
       var defaultPath = Quickshell.shellDir + "/Assets/settings-default.json";
 
-      Quickshell.execDetached(["sh", "-c", `cat > "${defaultPath}" << 'NOCTALIA_EOF'\n${jsonData}\nNOCTALIA_EOF`]);
+      Quickshell.execDetached(["sh", "-c", `cat > "${defaultPath}" << 'OCTALIA_EOF'\n${jsonData}\nOCTALIA_EOF`]);
     } catch (error) {
       Logger.e("Settings", "Failed to generate default settings file: " + error);
     }
@@ -1086,7 +1086,7 @@ Singleton {
 
       var defaultPath = Quickshell.shellDir + "/Assets/settings-widgets-default.json";
 
-      Quickshell.execDetached(["sh", "-c", `cat > "${defaultPath}" << 'NOCTALIA_EOF'\n${jsonData}\nNOCTALIA_EOF`]);
+      Quickshell.execDetached(["sh", "-c", `cat > "${defaultPath}" << 'OCTALIA_EOF'\n${jsonData}\nOCTALIA_EOF`]);
     } catch (error) {
       Logger.e("Settings", "Failed to generate widget default settings file: " + error);
     }

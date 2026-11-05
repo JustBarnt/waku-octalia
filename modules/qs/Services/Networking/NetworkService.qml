@@ -7,7 +7,7 @@ import qs.Commons
 import qs.Services.UI
 import qs.compat
 
-// Noctalia's NetworkService over the engine's Network (waku.services): Windows connectivity
+// Octalia's NetworkService over the engine's Network (waku.services): Windows connectivity
 // profiles, wlanapi scans, the Wi-Fi radio switch and interface counters. Public names are upstream's.
 //
 // What Windows does differently, and so what this adapter does not do:

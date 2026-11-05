@@ -11,7 +11,7 @@ $t = Rep $t 'Quickshell.execDetached(["sh", "-c", customCommand]);' 'Quickshell.
 $t = Rep $t "  // Session management`n" @'
   // Session management, through the engine's ControlCenter: lock, sleep, hibernate, signOut, restart and
   // shutdown. The engine asks for a second request of the same id before it runs a dangerous one;
-  // Noctalia's session menu has its own confirmation, so the request is repeated here.
+  // Octalia's session menu has its own confirmation, so the request is repeated here.
   function windowsSession(id) {
     if (!S.ControlCenter.requestAction(id))
       S.ControlCenter.requestAction(id);

@@ -6,7 +6,7 @@ import waku.services as S
 import qs.Commons
 import qs.compat
 
-// Noctalia's HostService on Windows: the user and machine names come from the engine's ControlCenter
+// Octalia's HostService on Windows: the user and machine names come from the engine's ControlCenter
 // (the Windows account) and the environment. There is no distro, so `osPretty` is "Windows" and
 // `osLogo` is the Windows logo.
 Singleton {
@@ -20,7 +20,7 @@ Singleton {
 
   // User info
   readonly property string username: (S.ControlCenter.userName || Quickshell.env("USERNAME") || "")
-  readonly property string envRealName: (Quickshell.env("NOCTALIA_REALNAME") || "")
+  readonly property string envRealName: (Quickshell.env("OCTALIA_REALNAME") || "")
   readonly property string realName: S.ControlCenter.userName
 
   // Machine info

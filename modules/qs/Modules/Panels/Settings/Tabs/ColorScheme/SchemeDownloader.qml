@@ -624,8 +624,8 @@ Popup {
                                                                                            "scheme": schemeName
                                                                                          }), "settings-color-scheme");
     if (needsReset) {
-      Settings.data.colorSchemes.predefinedScheme = "Noctalia (default)";
-      ColorSchemeService.setPredefinedScheme("Noctalia (default)");
+      Settings.data.colorSchemes.predefinedScheme = "Octalia (default)";
+      ColorSchemeService.setPredefinedScheme("Octalia (default)");
     }
     // rm runs detached; rescan once it has had time to finish
     reloadAfterDeleteTimer.restart();

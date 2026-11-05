@@ -1,6 +1,6 @@
-# Noctalia on waku
+# Octalia on waku
 
-The Noctalia shell, ported to run on waku.
+The Octalia shell, ported to run on waku.
 
 ## Keys and tiling
 

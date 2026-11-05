@@ -6,7 +6,7 @@ import waku.services as S
 import qs.Commons
 import qs.compat
 
-// Noctalia's BrightnessService over the engine's ControlCenter: one brightness (0..100) of the display
+// Octalia's BrightnessService over the engine's ControlCenter: one brightness (0..100) of the display
 // source the engine picked (WinRT or DDC/CI), shared by every screen. Upstream's sysfs, ddcutil and Apple
 // display paths are gone, so `ddcMonitors` stays empty and every monitor reports method "internal". The
 // backlight list of the settings tab is the engine's brightness sources; picking one calls

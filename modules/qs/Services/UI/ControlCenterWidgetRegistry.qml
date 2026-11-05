@@ -19,7 +19,7 @@ Singleton {
                            "PowerProfile": powerProfileComponent,
                            "WiFi": networkComponent,
                            "Network": networkComponent,
-                           "NoctaliaPerformance": noctaliaPerformanceComponent,
+                           "OctaliaPerformance": octaliaPerformanceComponent,
                            "WallpaperSelector": wallpaperSelectorComponent
                          })
 
@@ -58,8 +58,8 @@ Singleton {
   property Component networkComponent: Component {
     Network {}
   }
-  property Component noctaliaPerformanceComponent: Component {
-    NoctaliaPerformance {}
+  property Component octaliaPerformanceComponent: Component {
+    OctaliaPerformance {}
   }
   property Component wallpaperSelectorComponent: Component {
     WallpaperSelector {}

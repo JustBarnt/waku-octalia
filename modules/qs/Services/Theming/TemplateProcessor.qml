@@ -11,7 +11,7 @@ import qs.compat
 
 // Wallpaper-derived colors, generated in process by the engine's ColorScheme (waku.services).
 // Upstream shells out to a python template processor that also writes the app/terminal themes;
-// on Windows only Noctalia's own colors.json is produced, from the wallpaper image.
+// on Windows only Octalia's own colors.json is produced, from the wallpaper image.
 Singleton {
   id: root
 
@@ -19,7 +19,7 @@ Singleton {
   // predefined scheme), so pending hooks are released.
   signal colorsGenerated
 
-  // Noctalia generation method -> engine variant (S.ColorScheme.variants). Methods without an
+  // Octalia generation method -> engine variant (S.ColorScheme.variants). Methods without an
   // engine equivalent ("dysfunctional") are left out of schemeTypes.
   readonly property var variantMap: ({
       "tonal-spot": "tonalspot",
@@ -124,10 +124,10 @@ Singleton {
     debounceTimer.stop();
   }
 
-  // Maps the M3 roles of an engine scheme onto Noctalia's keys, with the roles the upstream
-  // templates/noctalia.json uses (surfaceContainer -> mSurfaceVariant, outlineVariant -> mOutline,
+  // Maps the M3 roles of an engine scheme onto Octalia's keys, with the roles the upstream
+  // templates/octalia.json uses (surfaceContainer -> mSurfaceVariant, outlineVariant -> mOutline,
   // tertiary -> mHover).
-  function noctaliaColors(c) {
+  function octaliaColors(c) {
     function role(name, fallbackName) {
       return c[name] !== undefined ? c[name] : c[fallbackName];
     }
@@ -185,7 +185,7 @@ Singleton {
         Logger.w("TemplateProcessor", "Invalid scheme for", path);
         root.applyFallback();
       } else {
-        ColorSchemeService.writeColorsToDisk(root.noctaliaColors(scheme.colors));
+        ColorSchemeService.writeColorsToDisk(root.octaliaColors(scheme.colors));
       }
       root.colorsGenerated();
     }

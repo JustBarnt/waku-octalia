@@ -6,7 +6,7 @@ import Quickshell.Wayland
 import qs.Commons
 import qs.Modules.Panels.Settings
 import qs.Services.Compositor
-import qs.Services.Noctalia
+import qs.Services.Octalia
 import qs.Services.Power
 import qs.Services.UI
 import qs.Widgets
@@ -39,7 +39,7 @@ Variants {
 
     // Only create PanelWindow if enabled AND (screen has widgets OR in edit mode)
     // During compositor overview, show widgets only when overviewEnabled is true.
-    active: modelData && Settings.data.desktopWidgets.enabled && (screenWidgets.length > 0 || DesktopWidgetRegistry.editMode) && (!CompositorService.overviewActive || Settings.data.desktopWidgets.overviewEnabled) && (!PowerProfileService.noctaliaPerformanceMode || !Settings.data.noctaliaPerformance.disableDesktopWidgets) && !PanelService.lockScreen?.active
+    active: modelData && Settings.data.desktopWidgets.enabled && (screenWidgets.length > 0 || DesktopWidgetRegistry.editMode) && (!CompositorService.overviewActive || Settings.data.desktopWidgets.overviewEnabled) && (!PowerProfileService.octaliaPerformanceMode || !Settings.data.octaliaPerformance.disableDesktopWidgets) && !PanelService.lockScreen?.active
 
     sourceComponent: PanelWindow {
       id: window
@@ -62,7 +62,7 @@ Variants {
 
       WlrLayershell.layer: WlrLayer.Bottom
       WlrLayershell.exclusionMode: ExclusionMode.Ignore
-      WlrLayershell.namespace: "noctalia-desktop-widgets-" + (screen?.name || "unknown")
+      WlrLayershell.namespace: "octalia-desktop-widgets-" + (screen?.name || "unknown")
 
       anchors {
         top: true

@@ -7,7 +7,7 @@ import qs.Services.UI
 import qs.Widgets
 
 // AppsList - the running applications as a row of icons, in place of the active-window label
-// (styled after Caelestia's bar list). One icon per application (windows grouped by app id, in the
+// (styled after Celeste's bar list). One icon per application (windows grouped by app id, in the
 // order they were first seen). The application with the focused window sits on a rounded primary
 // pill. An application with several windows has a count badge. An application whose windows are all
 // on other workspaces is dimmed. A click focuses the application's window: for a group, the one

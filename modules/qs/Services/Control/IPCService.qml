@@ -13,7 +13,7 @@ import qs.Services.Hardware
 import qs.Services.Location
 import qs.Services.Media
 import qs.Services.Networking
-import qs.Services.Noctalia
+import qs.Services.Octalia
 import qs.Services.Power
 import qs.Services.System
 import qs.Services.Theming
@@ -314,7 +314,7 @@ Singleton {
     }
   }
 
-  // Port: same key as caelestia's launcher. waku registers it; remove the line to bind
+  // Port: same key as celeste's launcher. waku registers it; remove the line to bind
   // `wakuc shortcut launcher` elsewhere.
   GlobalShortcut {
     name: "launcher"
@@ -763,16 +763,16 @@ Singleton {
       }
     }
 
-    function toggleNoctaliaPerformance() {
-      PowerProfileService.toggleNoctaliaPerformance();
+    function toggleOctaliaPerformance() {
+      PowerProfileService.toggleOctaliaPerformance();
     }
 
-    function enableNoctaliaPerformance() {
-      PowerProfileService.setNoctaliaPerformance(true);
+    function enableOctaliaPerformance() {
+      PowerProfileService.setOctaliaPerformance(true);
     }
 
-    function disableNoctaliaPerformance() {
-      PowerProfileService.setNoctaliaPerformance(false);
+    function disableOctaliaPerformance() {
+      PowerProfileService.setOctaliaPerformance(false);
     }
   }
 
