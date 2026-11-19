@@ -101,22 +101,10 @@ Item {
     }
     return sig;
   }
-  Repeater {
-    id: statusConnectionsRepeater
-    model: SystemTray.items && SystemTray.items.values ? SystemTray.items.values : []
-
-    delegate: Item {
-      Connections {
-        target: modelData
-        enabled: modelData !== null && modelData !== undefined
-        function onStatusChanged() {
-          if (root.hidePassive) {
-            root.updateFilteredItems();
-          }
-        }
-      }
-    }
-  }
+  // Port: upstream watched each item's statusChanged here to re-filter passive items. waku's tray
+  // item has a constant status (Windows tray icons have no passive state; system_tray_item.h), so
+  // there is no such signal and the Connections only logged a warning per icon. The items list
+  // changing still re-filters (statusSignature above).
 
   function _performFilteredItemsUpdate() {
     // Force a fresh read of settings to ensure we have the latest blacklist
