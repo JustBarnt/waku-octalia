@@ -338,9 +338,6 @@ Singleton {
   function init() {
     Logger.i("Wallpaper", "Service started");
 
-    // No animation: the new wallpaper is set at once.
-    S.Wallpapers.configureEngine(false, "");
-
     translateModels();
     Qt.callLater(root._dedupeWallpaperFavoritesByPath);
 
