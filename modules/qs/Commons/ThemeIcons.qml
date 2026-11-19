@@ -2,6 +2,7 @@ pragma Singleton
 
 import QtQuick 6.10
 import Quickshell
+import Quickshell.Wayland
 import qs.Commons
 import qs.compat
 
@@ -95,7 +96,29 @@ Singleton {
       return iconFromName(entry.icon, fallback);
     }
 
+    // Port (waku): no Start Menu shortcut matches this process (Steam's window is steamwebhelper,
+    // not steam), and Windows has no icon theme to look the name up in. Use the icon of a running
+    // window of the app, as the Windows taskbar does.
+    const windowIcon = windowIconFor(appId);
+    if (windowIcon)
+      return windowIcon;
+
     return iconFromName(appId, fallback);
+  }
+
+  // Port (waku): the taskbar icon of a running window whose appId (the executable name, lower case)
+  // matches, or "".
+  function windowIconFor(appId) {
+    try {
+      const id = String(appId).toLowerCase();
+      const list = (ToplevelManager && ToplevelManager.toplevels) ? (ToplevelManager.toplevels.values || []) : [];
+      for (let i = 0; i < list.length; i++) {
+        const t = list[i];
+        if (t && t.iconUrl && String(t.appId).toLowerCase() === id)
+          return t.iconUrl;
+      }
+    } catch (e) {}
+    return "";
   }
 
   // Robust lookup strategy
@@ -124,8 +147,11 @@ Singleton {
   function iconFromName(iconName, fallbackName) {
     const fallback = fallbackName || "application-x-executable";
     try {
+      // Port: the checking form (`true`): "" when the name does not resolve. The form with a
+      // fallback name handed back the bare name ("application-x-executable"), which no image
+      // loads on Windows, so a missing icon was a blank square instead of the caller's fallback.
       if (iconName && typeof Quickshell !== 'undefined' && Quickshell.iconPath) {
-        const p = Quickshell.iconPath(iconName, fallback);
+        const p = Quickshell.iconPath(iconName, true);
         if (p && p !== "")
           return p;
       }
