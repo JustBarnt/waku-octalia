@@ -44,7 +44,7 @@ SmartPanel {
   function onDownPressed() {
     if (!contentItem)
       return;
-    let view = contentItem.screenRepeater.itemAt(contentItem.currentScreenIndex);
+    let view = contentItem.activeView();
     if (view?.gridView) {
       if (!view.gridView.hasActiveFocus) {
         view.gridView.forceActiveFocus();
@@ -64,7 +64,7 @@ SmartPanel {
   function onUpPressed() {
     if (!contentItem)
       return;
-    let view = contentItem.screenRepeater.itemAt(contentItem.currentScreenIndex);
+    let view = contentItem.activeView();
     if (view?.gridView?.hasActiveFocus) {
       if (view.gridView.currentIndex < 0 && view.gridView.model.length > 0) {
         view.gridView.currentIndex = 0;
@@ -77,7 +77,7 @@ SmartPanel {
   function onLeftPressed() {
     if (!contentItem)
       return;
-    let view = contentItem.screenRepeater.itemAt(contentItem.currentScreenIndex);
+    let view = contentItem.activeView();
     if (view?.gridView?.hasActiveFocus) {
       if (view.gridView.currentIndex < 0 && view.gridView.model.length > 0) {
         view.gridView.currentIndex = 0;
@@ -90,7 +90,7 @@ SmartPanel {
   function onRightPressed() {
     if (!contentItem)
       return;
-    let view = contentItem.screenRepeater.itemAt(contentItem.currentScreenIndex);
+    let view = contentItem.activeView();
     if (view?.gridView?.hasActiveFocus) {
       if (view.gridView.currentIndex < 0 && view.gridView.model.length > 0) {
         view.gridView.currentIndex = 0;
@@ -110,7 +110,7 @@ SmartPanel {
       return;
     }
 
-    let view = contentItem.screenRepeater.itemAt(contentItem.currentScreenIndex);
+    let view = contentItem.activeView();
     if (view?.gridView?.hasActiveFocus) {
       let gridView = view.gridView;
       if (gridView.currentIndex >= 0 && gridView.currentIndex < gridView.model.count) {
@@ -144,6 +144,13 @@ SmartPanel {
     readonly property bool headerScreensStripAvailable: !Settings.data.wallpaper.setWallpaperOnAllMonitors || Settings.data.wallpaper.enableMultiMonitorDirectories
     readonly property bool headerDevicesButtonVisible: Quickshell.screens.length > 1 || Settings.data.wallpaper.enableMultiMonitorDirectories
     property alias screenRepeater: screenRepeater
+    property alias wallpaperEngineView: wallpaperEngineView
+    readonly property bool engineMode: Settings.data.wallpaper.backend === "wallpaperEngine"
+
+    // The grid the arrow keys and Enter act on.
+    function activeView() {
+      return engineMode ? wallpaperEngineView : screenRepeater.itemAt(currentScreenIndex);
+    }
 
     Component.onCompleted: {
       root.contentItem = panelContent;
@@ -238,6 +245,7 @@ SmartPanel {
       interval: 150
       onTriggered: {
         panelContent.filterText = searchInput.text;
+        wallpaperEngineView.filterText = searchInput.text;
         // Trigger update on all screen views
         for (var i = 0; i < screenRepeater.count; i++) {
           let item = screenRepeater.itemAt(i);
@@ -297,7 +305,7 @@ SmartPanel {
             }
 
             NIconButton {
-              visible: Settings.data.wallpaper.enabled
+              visible: Settings.data.wallpaper.enabled && !panelContent.engineMode
               icon: "dark-mode"
               baseSize: Style.baseWidgetSize * 0.8
               colorBg: !Settings.data.wallpaper.linkLightAndDarkWallpapers ? Color.mPrimary : Color.smartAlpha(Color.mSurfaceVariant)
@@ -306,7 +314,7 @@ SmartPanel {
             }
 
             NIconButton {
-              visible: Settings.data.wallpaper.enabled && panelContent.headerDevicesButtonVisible
+              visible: Settings.data.wallpaper.enabled && panelContent.headerDevicesButtonVisible && !panelContent.engineMode
               icon: "devices"
               baseSize: Style.baseWidgetSize * 0.8
               colorBg: !Settings.data.wallpaper.setWallpaperOnAllMonitors ? Color.mPrimary : Color.smartAlpha(Color.mSurfaceVariant)
@@ -315,6 +323,7 @@ SmartPanel {
             }
 
             NIconButton {
+              visible: !panelContent.engineMode
               icon: "palette"
               baseSize: Style.baseWidgetSize * 0.8
               colorBg: Settings.data.wallpaper.useSolidColor ? Color.mPrimary : Color.mSurfaceVariant
@@ -345,7 +354,7 @@ SmartPanel {
 
           NTabBar {
             id: appearanceTabBar
-            visible: Settings.data.wallpaper.enabled && !Settings.data.wallpaper.linkLightAndDarkWallpapers
+            visible: Settings.data.wallpaper.enabled && !Settings.data.wallpaper.linkLightAndDarkWallpapers && !panelContent.engineMode
             Layout.fillWidth: true
             currentIndex: panelContent.appearanceTabIndex
             spacing: Style.marginM
@@ -374,7 +383,7 @@ SmartPanel {
 
           NTabBar {
             id: screenTabBar
-            visible: panelContent.headerScreensStripAvailable
+            visible: panelContent.headerScreensStripAvailable && !panelContent.engineMode
             Layout.fillWidth: true
             currentIndex: currentScreenIndex
             onCurrentIndexChanged: currentScreenIndex = currentIndex
@@ -402,7 +411,7 @@ SmartPanel {
 
             NTextInput {
               id: searchInput
-              placeholderText: Settings.data.wallpaper.useWallhaven ? I18n.tr("placeholders.search-wallhaven") : I18n.tr("placeholders.search-wallpapers")
+              placeholderText: (Settings.data.wallpaper.useWallhaven && !panelContent.engineMode) ? I18n.tr("placeholders.search-wallhaven") : I18n.tr("placeholders.search-wallpapers")
               fontSize: Style.fontSizeM
               Layout.fillWidth: true
 
@@ -462,7 +471,9 @@ SmartPanel {
 
               Keys.onPressed: event => {
                                 if (Keybinds.checkKey(event, 'down', Settings)) {
-                                  if (Settings.data.wallpaper.useWallhaven) {
+                                  if (panelContent.engineMode) {
+                                    wallpaperEngineView.gridView.forceActiveFocus();
+                                  } else if (Settings.data.wallpaper.useWallhaven) {
                                     if (wallhavenView && wallhavenView.gridView) {
                                       wallhavenView.gridView.forceActiveFocus();
                                     }
@@ -560,9 +571,13 @@ SmartPanel {
                 {
                   "key": "wallhaven",
                   "name": I18n.tr("wallpaper.panel.source-wallhaven")
+                },
+                {
+                  "key": "wallpaperEngine",
+                  "name": I18n.tr("wallpaper.panel.source-wallpaper-engine")
                 }
               ]
-              currentKey: Settings.data.wallpaper.useWallhaven ? "wallhaven" : "local"
+              currentKey: panelContent.engineMode ? "wallpaperEngine" : (Settings.data.wallpaper.useWallhaven ? "wallhaven" : "local")
               property bool skipNextSelected: false
               Component.onCompleted: {
                 // Skip the first onSelected if it fires during initialization
@@ -575,6 +590,12 @@ SmartPanel {
                             if (skipNextSelected) {
                               return;
                             }
+                            if (key === "wallpaperEngine") {
+                              Settings.data.wallpaper.backend = "wallpaperEngine";
+                              searchInput.text = panelContent.filterText || "";
+                              return;
+                            }
+                            Settings.data.wallpaper.backend = "windows";
                             var useWallhaven = (key === "wallhaven");
                             Settings.data.wallpaper.useWallhaven = useWallhaven;
                             // Update search input text based on mode
@@ -610,7 +631,7 @@ SmartPanel {
               id: wallhavenSettingsButton
               icon: "settings"
               baseSize: Style.baseWidgetSize * 0.8
-              visible: Settings.data.wallpaper.useWallhaven
+              visible: Settings.data.wallpaper.useWallhaven && !panelContent.engineMode
               onClicked: {
                 if (searchInput.inputItem) {
                   searchInput.inputItem.focus = false;
@@ -635,7 +656,7 @@ SmartPanel {
           anchors.fill: parent
           anchors.margins: Style.marginL
 
-          currentIndex: Settings.data.wallpaper.useWallhaven ? 1 : 0
+          currentIndex: panelContent.engineMode ? 2 : (Settings.data.wallpaper.useWallhaven ? 1 : 0)
 
           // Local wallpapers
           StackLayout {
@@ -654,6 +675,12 @@ SmartPanel {
           // Wallhaven wallpapers
           WallhavenView {
             id: wallhavenView
+          }
+
+          // Wallpaper Engine wallpapers
+          WallpaperEngineView {
+            id: wallpaperEngineView
+            columns: (screen.width > 1920) ? 5 : 4
           }
         }
       }

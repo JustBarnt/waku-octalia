@@ -29,6 +29,37 @@ ColumnLayout {
     spacing: Style.marginL
     Layout.fillWidth: true
 
+    NComboBox {
+      label: I18n.tr("panels.wallpaper.settings-backend-label")
+      description: I18n.tr("panels.wallpaper.settings-backend-description")
+      Layout.fillWidth: true
+      model: [
+        {
+          "key": "windows",
+          "name": I18n.tr("panels.wallpaper.backend-windows")
+        },
+        {
+          "key": "wallpaperEngine",
+          "name": I18n.tr("panels.wallpaper.backend-wallpaper-engine")
+        }
+      ]
+      currentKey: Settings.data.wallpaper.backend
+      onSelected: key => Settings.data.wallpaper.backend = key
+      defaultValue: Settings.getDefaultValue("wallpaper.backend")
+    }
+
+    NTextInput {
+      visible: Settings.data.wallpaper.backend === "wallpaperEngine"
+      label: I18n.tr("panels.wallpaper.settings-engine-folder-label")
+      description: WallpaperEngineService.installDir !== "" ? I18n.tr("panels.wallpaper.settings-engine-folder-found", {
+                                                                          "path": WallpaperEngineService.installDir
+                                                                        }) : I18n.tr("panels.wallpaper.settings-engine-folder-description")
+      placeholderText: I18n.tr("panels.wallpaper.settings-engine-folder-placeholder")
+      text: Settings.data.wallpaper.wallpaperEngineDirectory
+      Layout.fillWidth: true
+      onEditingFinished: Settings.data.wallpaper.wallpaperEngineDirectory = text.trim()
+    }
+
     RowLayout {
 
       NLabel {

@@ -105,6 +105,13 @@ Singleton {
 
   Connections {
     target: Settings.data.wallpaper
+    function onBackendChanged() {
+      // Back on the Windows wallpaper: put the shell's choice back.
+      if (root.windowsBackend) {
+        root.appliedKey = "";
+        root.syncWindowsWallpaper();
+      }
+    }
     function onDirectoryChanged() {
       root.usedRandomWallpapers = {};
       root.refreshWallpapersList();
@@ -278,8 +285,10 @@ Singleton {
     return localPath(p).toLowerCase();
   }
 
+  readonly property bool windowsBackend: Settings.data.wallpaper.backend !== "wallpaperEngine"
+
   function syncWindowsWallpaper() {
-    if (!isInitialized || !Settings.data.wallpaper.enabled || Settings.data.wallpaper.useSolidColor || !S.Wallpapers.available || Quickshell.screens.length === 0)
+    if (!isInitialized || !Settings.data.wallpaper.enabled || !windowsBackend || Settings.data.wallpaper.useSolidColor || !S.Wallpapers.available || Quickshell.screens.length === 0)
       return;
     if (!startupApplied && !currentWallpapers[Quickshell.screens[0].name]) {
       // Nothing is recorded for this screen (a first run, or a cache from another screen name):
@@ -304,7 +313,7 @@ Singleton {
   // A change made outside the shell (wakuc wallpaper next, the gallery, Windows settings) becomes
   // the shell's choice, so the colours and the picker follow it.
   function adoptWindowsWallpaper() {
-    if (!startupApplied || !Settings.data.wallpaper.enabled || Quickshell.screens.length === 0)
+    if (!startupApplied || !Settings.data.wallpaper.enabled || !windowsBackend || Quickshell.screens.length === 0)
       return;
     var key = pathKey(S.Wallpapers.current);
     if (key === "" || key === appliedKey)
@@ -1739,7 +1748,7 @@ Singleton {
   Timer {
     id: randomWallpaperTimer
     interval: Settings.data.wallpaper.randomIntervalSec * 1000
-    running: Settings.data.wallpaper.automationEnabled && !PowerProfileService.octaliaPerformanceMode
+    running: Settings.data.wallpaper.automationEnabled && root.windowsBackend && !PowerProfileService.octaliaPerformanceMode
     repeat: true
     onTriggered: setNextWallpaper()
     triggeredOnStart: false

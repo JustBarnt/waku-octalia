@@ -200,6 +200,8 @@
   },
   "wallpaper": {
     "enabled": true,
+    "backend": "windows",
+    "wallpaperEngineDirectory": "",
     "overviewEnabled": false,
     "directory": "",
     "monitorDirectories": [],

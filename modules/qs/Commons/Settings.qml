@@ -410,6 +410,8 @@ Singleton {
     // wallpaper
     property JsonObject wallpaper: JsonObject {
       property bool enabled: true
+      property string backend: "windows" // "windows" | "wallpaperEngine"
+      property string wallpaperEngineDirectory: "" // install folder; empty finds it
       property bool overviewEnabled: false
       property string directory: ""
       property list<var> monitorDirectories: []

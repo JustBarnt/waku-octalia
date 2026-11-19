@@ -14,6 +14,8 @@ Singleton {
 
     // When the wallpaper changes, regenerate theme if necessary
     function onWallpaperChanged(screenName, path) {
+      if (WallpaperEngineService.active)
+        return;
       var effectiveMonitor = Settings.data.colorSchemes.monitorForColors;
       if (effectiveMonitor === "" || effectiveMonitor === undefined) {
         effectiveMonitor = Screen.name;
@@ -31,6 +33,17 @@ Singleton {
       } else {
         ColorSchemeService.applyScheme(Settings.data.colorSchemes.predefinedScheme);
       }
+    }
+  }
+
+  Connections {
+    target: WallpaperEngineService
+    function onCurrentPreviewChanged() {
+      if (WallpaperEngineService.active && Settings.data.colorSchemes.useWallpaperColors)
+        root.generateFromWallpaper();
+    }
+    function onActiveChanged() {
+      root.generate();
     }
   }
 
@@ -67,6 +80,16 @@ Singleton {
   }
 
   function generateFromWallpaper() {
+    if (WallpaperEngineService.active) {
+      // Wallpaper Engine's preview image stands in for the moving wallpaper.
+      const preview = WallpaperEngineService.currentPreview;
+      if (preview === "") {
+        Logger.d("AppThemeService", "No Wallpaper Engine preview yet");
+        return;
+      }
+      TemplateProcessor.processWallpaperColors(preview, Settings.data.colorSchemes.darkMode ? "dark" : "light");
+      return;
+    }
     var effectiveMonitor = Settings.data.colorSchemes.monitorForColors;
     if (effectiveMonitor === "" || effectiveMonitor === undefined) {
       effectiveMonitor = Screen.name;

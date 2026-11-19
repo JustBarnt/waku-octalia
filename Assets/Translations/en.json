@@ -24,6 +24,13 @@
     "show-active-only": "Show active only",
     "show-all": "Show all",
     "toggle-mute": "Toggle mute",
+    "use-wallpaper-engine": "Use Wallpaper Engine",
+    "use-windows-wallpaper": "Use Windows wallpaper",
+    "wallpaper-engine-mute": "Mute wallpaper",
+    "wallpaper-engine-pause": "Pause wallpaper",
+    "wallpaper-engine-play": "Play wallpaper",
+    "wallpaper-engine-stop": "Stop wallpaper",
+    "wallpaper-engine-unmute": "Unmute wallpaper",
     "widget-settings": "Widget settings"
   },
   "authentication": {
@@ -1770,6 +1777,8 @@
       "automation-random-wallpaper-description": "Schedule random wallpaper changes at regular intervals.",
       "automation-scheduled-change-description": "Automatically change wallpapers at regular intervals.",
       "automation-scheduled-change-label": "Scheduled change",
+      "backend-wallpaper-engine": "Wallpaper Engine",
+      "backend-windows": "Windows wallpaper",
       "look-feel-edge-smoothness-description": "Applies a soft, feathered effect to the edge of transitions.",
       "look-feel-edge-smoothness-label": "Soften transition edge",
       "look-feel-fill-color-description": "Choose a fill color that may appear behind the wallpaper.",
@@ -1782,6 +1791,8 @@
       "look-feel-transition-duration-label": "Transition duration",
       "look-feel-transition-type-description": "Animation type when switching between wallpapers.",
       "look-feel-transition-type-label": "Transition type",
+      "settings-backend-description": "What the wallpaper picker changes: the Windows desktop picture, or the wallpaper Wallpaper Engine plays.",
+      "settings-backend-label": "Wallpaper backend",
       "settings-clear-cache-button": "Clear cache",
       "settings-clear-cache-description": "Clear cached resized wallpapers to free disk space.",
       "settings-clear-cache-label": "Wallpaper cache",
@@ -1791,6 +1802,10 @@
       "settings-enable-management-label": "Enable wallpaper management",
       "settings-enable-overview-description": "Applies a blurred and dimmed wallpaper to the overview screen.",
       "settings-enable-overview-label": "Enable overview wallpaper",
+      "settings-engine-folder-description": "The folder holding wallpaper64.exe. Leave empty to find it through Steam.",
+      "settings-engine-folder-found": "Using {path}. Leave empty to find it through Steam.",
+      "settings-engine-folder-label": "Wallpaper Engine folder",
+      "settings-engine-folder-placeholder": "Found automatically",
       "settings-folder-description": "Path to your main wallpaper folder.",
       "settings-folder-label": "Wallpaper folder",
       "settings-hide-wallpaper-filenames-tooltip-hide": "Hide filenames",
@@ -2071,6 +2086,13 @@
       "go-up-hint": "Use the back button to navigate up."
     },
     "configure-directory": "Configure your wallpaper directory with images.",
+    "engine": {
+      "count": "{count} wallpapers",
+      "empty": "No Wallpaper Engine wallpapers installed",
+      "not-found": "Wallpaper Engine not found",
+      "not-found-hint": "Set its install folder in Settings > Wallpaper.",
+      "scanning": "Looking for Wallpaper Engine wallpapers..."
+    },
     "fill-modes": {
       "crop": "Crop (Fill)",
       "fit": "Fit (Contain)",
@@ -2126,6 +2148,7 @@
       "sorting-views": "Views",
       "source-label": "Source",
       "source-wallhaven": "Wallhaven",
+      "source-wallpaper-engine": "Wallpaper Engine",
       "title": "Wallpaper Selector",
       "wallhaven-settings-title": "Wallhaven Settings"
     },

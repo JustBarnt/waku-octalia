@@ -105,6 +105,7 @@ ShellRoot {
 
         // Critical services needed for initial UI rendering
         WallpaperService.init();
+        WallpaperEngineService.init();
         ImageCacheService.init();
         AppThemeService.init();
         ColorSchemeService.init();

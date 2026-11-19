@@ -9,4 +9,5 @@ singleton SettingsPanelService 1.0 SettingsPanelService.qml
 singleton SettingsSearchService 1.0 SettingsSearchService.qml
 singleton ToastService 1.0 ToastService.qml
 singleton WallhavenService 1.0 WallhavenService.qml
+singleton WallpaperEngineService 1.0 WallpaperEngineService.qml
 singleton WallpaperService 1.0 WallpaperService.qml
