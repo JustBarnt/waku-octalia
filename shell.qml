@@ -58,6 +58,9 @@ ShellRoot {
     S.Tiling.rules = [ 
       { process: "Playrooms.exe", action: "tile" },
       { process: "MoonSweepers.exe", action: "tile" },
+      // Zen puts back the size it saved when it last closed, after it opens: place it again once
+      // it is done (needs waku with the settle rule action).
+      { process: "zen.exe", action: "settle" },
     ]
   }
 
