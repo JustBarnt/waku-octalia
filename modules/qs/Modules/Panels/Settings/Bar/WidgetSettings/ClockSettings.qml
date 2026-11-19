@@ -220,7 +220,7 @@ ColumnLayout {
             // Horizontal
             Repeater {
               Layout.topMargin: Style.marginM
-              model: I18n.locale.toString(now, valueFormatHorizontal.trim()).split("\\n")
+              model: Time.formatClock(now, valueFormatHorizontal.trim()).split("\\n")
               delegate: NText {
                 visible: text !== ""
                 text: modelData
@@ -251,7 +251,7 @@ ColumnLayout {
 
             Repeater {
               Layout.topMargin: Style.marginM
-              model: I18n.locale.toString(now, valueFormatVertical.trim()).split(" ")
+              model: Time.formatClock(now, valueFormatVertical.trim()).split(" ")
               delegate: NText {
                 visible: text !== ""
                 text: modelData

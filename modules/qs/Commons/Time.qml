@@ -86,6 +86,25 @@ Singleton {
     updateTimer.restart();
   }
 
+  // Julian date in the YYDDD form (two-digit year, then the day of the year, zero-padded to three
+  // digits): 17 Nov 2026 is "26321". Day counts use UTC midnights, so a DST change cannot shift them.
+  function julianDate(date) {
+    if (!date)
+      date = new Date();
+    const y = date.getFullYear();
+    const doy = Math.round((Date.UTC(y, date.getMonth(), date.getDate()) - Date.UTC(y, 0, 1)) / 86400000) + 1;
+    return ("0" + (y % 100)).slice(-2) + ("00" + doy).slice(-3);
+  }
+
+  // Formats `date` with a Qt date format, plus the custom token {julian} (YYDDD), which Qt has no
+  // token for. The token is replaced by a quoted literal before Qt sees the format, so the letters
+  // of its value are never read as format tokens.
+  function formatClock(date, format) {
+    const fmt = String(format || "");
+    const expanded = fmt.indexOf("{julian}") < 0 ? fmt : fmt.split("{julian}").join("'" + julianDate(date) + "'");
+    return I18n.locale.toString(date, expanded);
+  }
+
   // Formats a Date object into a YYYYMMDD-HHMMSS string.
   function getFormattedTimestamp(date) {
     if (!date) {

@@ -225,7 +225,7 @@ ColumnLayout {
 
             Repeater {
               Layout.topMargin: Style.marginM
-              model: I18n.locale.toString(now, valueFormat.trim()).split("\\n")
+              model: Time.formatClock(now, valueFormat.trim()).split("\\n")
               delegate: NText {
                 visible: text !== ""
                 text: modelData

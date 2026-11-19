@@ -81,7 +81,7 @@ Item {
           spacing: Settings.data.bar.showCapsule ? -5 : -3
           Repeater {
             id: repeater
-            model: I18n.locale.toString(now, formatHorizontal.trim()).split("\\n")
+            model: Time.formatClock(now, formatHorizontal.trim()).split("\\n")
             NText {
               visible: text !== ""
               text: modelData
@@ -121,7 +121,7 @@ Item {
           anchors.centerIn: parent
           spacing: -2
           Repeater {
-            model: I18n.locale.toString(now, formatVertical.trim()).split(" ")
+            model: Time.formatClock(now, formatVertical.trim()).split(" ")
             delegate: NText {
               visible: text !== ""
               text: modelData

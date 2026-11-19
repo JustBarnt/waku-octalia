@@ -82,6 +82,13 @@ Rectangle {
               "token": "ddd, MMM dd",
               "description": I18n.tr("widgets.datetime-tokens.common-weekday-date"),
               "example": "Fri, Dec 12"
+            },
+            {
+              // Port: a custom token (Time.formatClock), not a Qt one.
+              "category": "Common",
+              "token": "{julian}",
+              "description": "Julian date (YYDDD)",
+              "example": Time.julianDate(Time.now)
             } // Hour tokens
             ,
             {
