@@ -146,7 +146,18 @@ Item {
   function switchToWorkspace(workspace) {
     if (!workspace)
       return;
-    S.Workspaces.focus(0, String(workspace.oid));
+    // `oid` is the desktop's own id. A widget that copies the workspace may drop it; the id
+    // ("<monitor>:<oid>", see syncWorkspaces) still carries it.
+    let oid = workspace.oid;
+    if (oid === undefined || oid === null || oid === "") {
+      const id = String(workspace.id ?? "");
+      oid = id.slice(id.indexOf(":") + 1);
+    }
+    if (!oid) {
+      Logger.w("WakuService", "switchToWorkspace: no desktop id for", workspace.name);
+      return;
+    }
+    S.Workspaces.focus(0, String(oid));
   }
 
   function cycleKeyboardLayout() {

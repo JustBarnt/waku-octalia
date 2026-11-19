@@ -2,7 +2,7 @@ import QtQuick 6.10
 import QtQuick.Controls.Basic
 import QtQuick.Effects
 import QtQuick.Layouts
-import QtQuick.Window
+import QtQuick.Window 6.10
 import Quickshell
 import Quickshell.Io
 import Quickshell.Widgets
@@ -357,7 +357,10 @@ Item {
           isFocused: ws.isFocused,
           isActive: ws.isActive,
           isUrgent: ws.isUrgent,
-          isOccupied: ws.isOccupied
+          isOccupied: ws.isOccupied,
+          // Port: the backend's own id (WakuService: the Windows desktop GUID). The switch needs it;
+          // without it a wheel step or a click on a pill asked for desktop "undefined".
+          oid: ws.oid
         };
 
         if (ws.handle !== null && ws.handle !== undefined) {
