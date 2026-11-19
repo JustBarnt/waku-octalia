@@ -1,9 +1,28 @@
-# The Octalia port's part of start.ps1 in the repo root. Runs in the launcher's scope: $PortDir and $Dev are set,
-# and $PortFlags may be assigned (extra waku arguments).
-# Octalia reads its config and cache folders from these; keep them inside the port. HOME is only read
-# (default wallpaper and video folders).
-$env:OCTALIA_CONFIG_DIR = Join-Path $PortDir 'state\config'
-$env:OCTALIA_CACHE_DIR = Join-Path $PortDir 'state\cache'
-$env:HOME = $env:USERPROFILE
-New-Item -ItemType Directory -Force $env:OCTALIA_CONFIG_DIR, $env:OCTALIA_CACHE_DIR | Out-Null
-$PortFlags = @('--import-path', (Join-Path $PortDir 'modules'))
+# Octalia's environment and waku flags, in one place: start.ps1 applies them to the waku it starts,
+# install-startup.ps1 stores the variables in the user environment for the sign-in task. Dot-source
+# it; it only sets variables in the caller's scope:
+#   $OctaliaRoot   this folder (the config home: shell.qml is here)
+#   $OctaliaEnv    the environment variables Octalia reads (an ordered hashtable)
+#   $OctaliaFlags  the waku arguments Octalia needs, besides --config-home
+$OctaliaRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
+# Octalia keeps its config and cache inside this folder (state\ is not tracked by git).
+$OctaliaEnv = [ordered]@{
+  OCTALIA_CONFIG_DIR = Join-Path $OctaliaRoot 'state\config'
+  OCTALIA_CACHE_DIR  = Join-Path $OctaliaRoot 'state\cache'
+}
+# --import-path: the qs.* modules live in modules\. directwrite: Octalia's fonts use variable axes.
+$OctaliaFlags = @('--import-path', (Join-Path $OctaliaRoot 'modules'), '--font-engine=directwrite')
+
+# waku.exe: -Waku, else $env:WAKU_EXE, else the one on PATH. Empty when none is found.
+function Find-Waku([string]$Waku) {
+  if ($Waku) { return $Waku }
+  if ($env:WAKU_EXE) { return $env:WAKU_EXE }
+  $found = Get-Command waku.exe -ErrorAction SilentlyContinue
+  if ($found) { return $found.Source }
+  return ''
+}
+
+# Start-Process joins an argument array with spaces and quotes nothing; quote what has a space.
+function Join-Arguments([string[]]$Arguments) {
+  ($Arguments | ForEach-Object { if ($_ -match '\s') { '"' + $_ + '"' } else { $_ } }) -join ' '
+}

@@ -1,6 +1,30 @@
 # Octalia on waku
 
-The Octalia shell, ported to run on waku.
+The Octalia shell, ported to run on waku. This folder is the config home: `shell.qml`, its modules
+and `keys.conf` are here. It started as the `octalia` folder of
+[waku-ports](https://github.com/JanDeDobbeleer/waku-ports), whose history it keeps.
+
+## Run it
+
+Needs `waku.exe`, `wakuc.exe` and `wakukeys.exe` on your PATH (or pass `-Waku` to `start.ps1`).
+
+    .\start.ps1              # stops any running waku, then starts Octalia
+    .\start.ps1 -Watch       # reload the shell when a file changes (else: wakuc --config-home <here> reload)
+    .\start.ps1 -Log         # also write waku's diagnostics log to logs\waku.log
+    .\start.ps1 -DryRun      # print what would run
+    .\stop.ps1               # stop every running waku and its key handler
+
+Start at sign-in, with waku's own per-user Scheduled Task (no admin rights):
+
+    .\install-startup.ps1            # register (again: replaces it)
+    .\install-startup.ps1 -Log       # and write logs\waku.log on every start
+    .\install-startup.ps1 -Status    # show the tasks and the stored environment
+    .\install-startup.ps1 -Remove    # remove the tasks and the stored environment
+
+The task runs `waku.exe` directly, not `start.ps1`, so `install-startup.ps1` stores Octalia's two
+variables (`OCTALIA_CONFIG_DIR`, `OCTALIA_CACHE_DIR`) in your user environment. Both scripts take
+them, and the waku flags, from `tools\env.ps1`. Settings and cache live in `state\`, which git
+ignores.
 
 ## Keys and tiling
 

@@ -1,6 +1,6 @@
 # Compile-checks every .qml under modules\qs in a throwaway shell (Qt.createComponent) and writes
 # one line per failing file to logs\loadcheck.txt. Never touches the real config home.
-param([string]$Bin = (Join-Path $PSScriptRoot '..\bin'), [int]$MaxSeconds = 120, [string]$Filter = '')
+param([string]$Bin = $(if ($env:WAKU_BIN) { $env:WAKU_BIN } elseif (Get-Command waku.exe -ErrorAction SilentlyContinue) { Split-Path (Get-Command waku.exe).Source } else { Join-Path $PSScriptRoot '..\bin' }), [int]$MaxSeconds = 120, [string]$Filter = '')
 $ErrorActionPreference = 'Stop'
 $env:QT_FORCE_STDERR_LOGGING = '1'
 $port = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
