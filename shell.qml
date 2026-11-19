@@ -56,6 +56,7 @@ ShellRoot {
     S.Tiling.ratio = 0.5;
     S.Tiling.enabled = true;
     S.Tiling.rules = [ 
+      { process: "OUTLOOK.EXE", title: " - (Message|Meeting|Appointment|Contact|Task)( \\(|$)", action: "float" },
       { process: "Playrooms.exe", action: "tile" },
       { process: "MoonSweepers.exe", action: "tile" },
       // Zen puts back the size it saved when it last closed, after it opens: place it again once
