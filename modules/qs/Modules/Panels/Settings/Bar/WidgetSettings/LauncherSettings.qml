@@ -113,7 +113,7 @@ ColumnLayout {
     title: I18n.tr("bar.control-center.select-custom-icon")
     selectionMode: "files"
     nameFilters: ImageCacheService.basicImageFilters.concat(["*.svg"])
-    initialPath: Quickshell.env("USERPROFILE") || Quickshell.env("HOME")
+    initialPath: Quickshell.env("USERPROFILE") || (Quickshell.env("HOME") || Quickshell.env("USERPROFILE"))
     onAccepted: paths => {
                   if (paths.length > 0) {
                     valueCustomIconPath = paths[0];

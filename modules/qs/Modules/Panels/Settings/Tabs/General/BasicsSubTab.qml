@@ -54,7 +54,7 @@ ColumnLayout {
     id: avatarPicker
     title: I18n.tr("panels.general.profile-select-avatar")
     selectionMode: "files"
-    initialPath: Settings.preprocessPath(Settings.data.general.avatarImage).substr(0, Settings.preprocessPath(Settings.data.general.avatarImage).lastIndexOf("/")) || Quickshell.env("HOME")
+    initialPath: Settings.preprocessPath(Settings.data.general.avatarImage).substr(0, Settings.preprocessPath(Settings.data.general.avatarImage).lastIndexOf("/")) || (Quickshell.env("HOME") || Quickshell.env("USERPROFILE"))
     nameFilters: ImageCacheService.basicImageFilters
     onAccepted: paths => {
                   if (paths.length > 0) {

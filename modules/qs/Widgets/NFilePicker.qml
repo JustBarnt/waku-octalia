@@ -12,7 +12,7 @@ Popup {
 
   // Properties
   property string title: I18n.tr("widget.file-picker.title")
-  property string initialPath: Quickshell.env("HOME") || "/home"
+  property string initialPath: (Quickshell.env("HOME") || Quickshell.env("USERPROFILE")) || "/home"
   property string selectionMode: "files" // "files" or "folders"
   property var nameFilters: ["*"]
   property bool showDirs: true
@@ -325,7 +325,7 @@ Popup {
             icon: "filepicker-home"
             baseSize: Style.baseWidgetSize * 0.8
             onClicked: {
-              const homePath = Quickshell.env("HOME") || "/home";
+              const homePath = (Quickshell.env("HOME") || Quickshell.env("USERPROFILE")) || "/home";
               folderModel.folder = root.toFileUrl(homePath);
               root.currentPath = homePath;
             }
@@ -443,9 +443,9 @@ Popup {
 
           onStatusChanged: {
             if (status === FolderListModel.Error) {
-              if (root.currentPath !== Quickshell.env("HOME")) {
-                folder = root.toFileUrl(Quickshell.env("HOME"));
-                root.currentPath = Quickshell.env("HOME");
+              if (root.currentPath !== (Quickshell.env("HOME") || Quickshell.env("USERPROFILE"))) {
+                folder = root.toFileUrl((Quickshell.env("HOME") || Quickshell.env("USERPROFILE")));
+                root.currentPath = (Quickshell.env("HOME") || Quickshell.env("USERPROFILE"));
               }
             } else if (status === FolderListModel.Ready) {
               root.updateFilteredModel();

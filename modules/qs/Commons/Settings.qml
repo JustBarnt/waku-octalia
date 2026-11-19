@@ -29,13 +29,13 @@ Singleton {
   readonly property int settingsVersion: 59
   property bool isDebug: Quickshell.env("OCTALIA_DEBUG") === "1"
   readonly property string shellName: "octalia"
-  readonly property string configDir: ensureTrailingSlash(Quickshell.env("OCTALIA_CONFIG_DIR") || (Quickshell.env("XDG_CONFIG_HOME") || Quickshell.env("HOME") + "/.config") + "/" + shellName + "/")
-  readonly property string cacheDir: ensureTrailingSlash(Quickshell.env("OCTALIA_CACHE_DIR") || (Quickshell.env("XDG_CACHE_HOME") || Quickshell.env("HOME") + "/.cache") + "/" + shellName + "/")
+  readonly property string configDir: ensureTrailingSlash(Quickshell.env("OCTALIA_CONFIG_DIR") || (Quickshell.env("XDG_CONFIG_HOME") || (Quickshell.env("HOME") || Quickshell.env("USERPROFILE")) + "/.config") + "/" + shellName + "/")
+  readonly property string cacheDir: ensureTrailingSlash(Quickshell.env("OCTALIA_CACHE_DIR") || (Quickshell.env("XDG_CACHE_HOME") || (Quickshell.env("HOME") || Quickshell.env("USERPROFILE")) + "/.cache") + "/" + shellName + "/")
 
   readonly property string settingsFile: Quickshell.env("OCTALIA_SETTINGS_FILE") || (configDir + "settings.json")
-  readonly property string defaultAvatar: Quickshell.env("HOME") + "/.face"
-  readonly property string defaultVideosDirectory: Quickshell.env("HOME") + "/Videos"
-  readonly property string defaultWallpapersDirectory: Quickshell.env("HOME") + "/.config/wallpapers"
+  readonly property string defaultAvatar: (Quickshell.env("HOME") || Quickshell.env("USERPROFILE")) + "/.face"
+  readonly property string defaultVideosDirectory: (Quickshell.env("HOME") || Quickshell.env("USERPROFILE")) + "/Videos"
+  readonly property string defaultWallpapersDirectory: (Quickshell.env("HOME") || Quickshell.env("USERPROFILE")) + "/.config/wallpapers"
 
   signal settingsLoaded
   signal settingsSaved
@@ -821,9 +821,9 @@ Singleton {
 
     // Expand "~" to user's home directory
     if (path.startsWith("~/")) {
-      return Quickshell.env("HOME") + path.substring(1);
+      return (Quickshell.env("HOME") || Quickshell.env("USERPROFILE")) + path.substring(1);
     } else if (path === "~") {
-      return Quickshell.env("HOME");
+      return (Quickshell.env("HOME") || Quickshell.env("USERPROFILE"));
     }
 
     return path;
