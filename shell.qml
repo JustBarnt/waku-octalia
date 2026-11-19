@@ -55,6 +55,10 @@ ShellRoot {
     S.Tiling.gap = 8;
     S.Tiling.ratio = 0.5;
     S.Tiling.enabled = true;
+    S.Tiling.rules = [ 
+      { process: "Playrooms.exe", action: "tile" },
+      { process: "MoonSweepers.exe", action: "tile" },
+    ]
   }
 
   Connections {
