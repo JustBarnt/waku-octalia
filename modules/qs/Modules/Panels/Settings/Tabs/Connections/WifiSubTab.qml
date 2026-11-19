@@ -1,7 +1,7 @@
 import QtQuick 6.10
 import QtQuick.Controls.Basic
 import QtQuick.Layouts
-import QtQuick.Window
+import QtQuick.Window 6.10
 import Quickshell
 import Quickshell.Bluetooth
 

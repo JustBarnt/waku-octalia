@@ -1,7 +1,7 @@
 pragma Singleton
 
 import QtQuick 6.10
-import QtQuick.Window
+import QtQuick.Window 6.10
 import Quickshell
 import Quickshell.Io
 import Quickshell.Services.Notifications
