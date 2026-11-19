@@ -949,7 +949,31 @@ Singleton {
   // -----------------------------------------------------
   // Get effective bar display mode for a screen (with inheritance)
   // If the screen has a displayMode override and overrides are enabled, use it; otherwise use global default
+  // Screens where an application is fullscreen (not maximized), from MainScreen. Not saved.
+  property var fullscreenScreens: ({})
+
+  function setScreenFullscreen(screenName, fullscreen) {
+    if (!screenName || !!fullscreenScreens[screenName] === fullscreen)
+      return;
+    var next = Object.assign({}, fullscreenScreens);
+    if (fullscreen)
+      next[screenName] = true;
+    else
+      delete next[screenName];
+    fullscreenScreens = next;
+  }
+
+  // The mode the bar behaves in now: auto-hide while an application is fullscreen on the screen,
+  // so the bar gets out of the way and still slides in at the screen edge.
   function getBarDisplayModeForScreen(screenName) {
+    if (fullscreenScreens[screenName])
+      return "auto_hide";
+    return getConfiguredBarDisplayModeForScreen(screenName);
+  }
+
+  // The mode the user chose, ignoring fullscreen. The exclusion zone keeps reserving space by it,
+  // so entering and leaving fullscreen does not resize the desktop.
+  function getConfiguredBarDisplayModeForScreen(screenName) {
     var override = _findScreenOverride(screenName);
     if (override && override.enabled !== false && override.displayMode !== undefined) {
       return override.displayMode;

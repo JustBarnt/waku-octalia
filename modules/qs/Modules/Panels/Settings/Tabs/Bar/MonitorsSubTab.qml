@@ -217,7 +217,7 @@ ColumnLayout {
                     "name": I18n.tr("hide-modes.auto-hide")
                   }
                 ]
-                currentKey: Settings.getBarDisplayModeForScreen(monitorCard.screenName)
+                currentKey: Settings.getConfiguredBarDisplayModeForScreen(monitorCard.screenName)
                 onSelected: key => Settings.setScreenOverride(monitorCard.screenName, "displayMode", key)
               }
             }

@@ -130,13 +130,19 @@ Item {
     }
   }
 
-  // React to displayMode changes
+  // React to displayMode changes (a setting, or an application going fullscreen)
   onAutoHideChanged: {
-    if (!autoHide) {
-      // Show bar when auto-hide is disabled
+    if (autoHide) {
+      // Hide now unless something keeps the bar up; the trigger zone brings it back.
+      if (!barWindow.barHovered && !barWindow.panelOpen && !BarService.popupOpen)
+        BarService.setScreenHidden(barWindow.screen?.name, true);
+    } else {
+      // Show bar when auto-hide is disabled. Through BarService, so the background and the click
+      // mask follow as well.
       hideTimer.stop();
       showTimer.stop();
       barWindow.isHidden = false;
+      BarService.setScreenHidden(barWindow.screen?.name, false);
     }
     // When auto-hide is enabled, don't immediately hide - wait for mouse to leave
   }

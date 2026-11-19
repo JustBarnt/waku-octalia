@@ -41,7 +41,14 @@ PanelWindow {
 
   Component.onCompleted: {
     Logger.d("MainScreen", "Initialized for screen:", screen?.name, "- Dimensions:", screen?.width, "x", screen?.height, "- Position:", screen?.x, ",", screen?.y);
+    Settings.setScreenFullscreen(screen?.name, appFullscreen);
   }
+  Component.onDestruction: Settings.setScreenFullscreen(screen?.name, false)
+
+  // waku reports an application covering this window's monitor (screenFullscreen), and whether it
+  // is only maximized (screenMaximized). Only a fullscreen one hides the bar.
+  readonly property bool appFullscreen: screenFullscreen && !screenMaximized
+  onAppFullscreenChanged: Settings.setScreenFullscreen(screen?.name, appFullscreen)
 
   WlrLayershell.layer: WlrLayer.Top
   WlrLayershell.namespace: "octalia-background-" + (screen?.name || "unknown")
@@ -128,7 +135,9 @@ PanelWindow {
     readonly property real barThickness: Style.barHeight
     readonly property real frameThickness: Settings.data.bar.frameThickness ?? 12
     readonly property string barPos: Settings.data.bar.position || "top"
-    readonly property bool showBar: root.barShouldShow
+    // A hidden auto-hide bar takes no clicks: its strip would otherwise block the top of a
+    // fullscreen application.
+    readonly property bool showBar: root.barShouldShow && !barPlaceholder.isHidden
 
     // Cover entire window (everything is masked/click-through)
     x: 0
