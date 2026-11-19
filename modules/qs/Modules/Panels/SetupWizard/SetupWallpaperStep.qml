@@ -366,18 +366,15 @@ ColumnLayout {
   }
 
   function readDirectoryImages(directoryPath) {
-    // Build find command args dynamically from ImageCacheService filters
+    // Port: PowerShell in place of `find` (Windows' find.exe searches text), as WallpaperService
+    // does: one path per line, with forward slashes. The filters are "*.ext" patterns.
     var filters = ImageCacheService.imageFilters;
-    var findArgs = ["find", directoryPath, "-type", "f", "("];
-    for (var i = 0; i < filters.length; i++) {
-      if (i > 0) {
-        findArgs.push("-o");
-      }
-      findArgs.push("-iname");
-      findArgs.push(filters[i]);
-    }
-    findArgs.push(")");
-    directoryScanner.command = findArgs;
+    var exts = filters.map(function (f) {
+      return f.replace(/^\*\./, "").replace(/\./g, "\\.");
+    });
+    var matchRegex = "^\\.(" + exts.join("|") + ")$";
+    var script = "Get-ChildItem -LiteralPath " + WallpaperService.psQuote(directoryPath) + " -File | Where-Object { $_.Extension -match " + WallpaperService.psQuote(matchRegex) + " } | ForEach-Object { $_.FullName.Replace([char]92, [char]47) }";
+    directoryScanner.command = WallpaperService.psArgs(script);
     directoryScanner.running = true;
     return [];
   }

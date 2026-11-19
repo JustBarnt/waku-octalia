@@ -136,7 +136,9 @@ Singleton {
 
   // Ensure usage file exists with default content
   function _ensureUsageFileExists() {
-    Quickshell.execDetached(["sh", "-c", `mkdir -p "$(dirname "${root.usageFilePath}")" && echo '{}' > "${root.usageFilePath}"`]);
+    // Port: no `sh` on Windows. The cache folder exists (Settings makes it); FileView writes.
+    Os.mkdirp(Settings.cacheDir);
+    usageFile.setText("{}");
   }
 
   // File paths
@@ -299,7 +301,9 @@ Singleton {
   function _doSaveUsageData() {
     try {
       const content = JSON.stringify(root.usageCounts);
-      Quickshell.execDetached(["sh", "-c", `mkdir -p "$(dirname "${root.usageFilePath}")" && echo '${content}' > "${root.usageFilePath}"`]);
+      // Port: written by the FileView, not `sh -c echo` (no sh on Windows, and a quote in the
+      // JSON would have broken the command).
+      usageFile.setText(content);
     } catch (e) {
       Logger.e("EmojiService", "Failed to save usage data: " + e.message);
     }
@@ -309,7 +313,8 @@ Singleton {
   function copy(emojiChar) {
     if (emojiChar) {
       recordUsage(emojiChar);  // Record usage before copying
-      Quickshell.execDetached(["sh", "-c", `echo -n "${emojiChar}" | wl-copy`]);
+      // Port: the Windows clipboard, not wl-copy.
+      Os.copy(emojiChar);
     }
   }
 }

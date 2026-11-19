@@ -221,15 +221,16 @@ Singleton {
 
     Logger.d("Wallhaven", "Downloading wallpaper", wallpaperId, "to", localPath);
 
-    // Use curl or wget to download the file, ensuring directory exists first
+    // Port: curl.exe ships with Windows 10 1803 and later; there is no sh or wget. --create-dirs
+    // makes the wallpaper folder, which `mkdir -p` did.
     var downloadProcess = Qt.createQmlObject(`
                                              import QtQuick
                                              import Quickshell.Io
                                              Process {
                                              id: downloadProcess
-                                             command: ["sh", "-c", "mkdir -p '` + wallpaperDir + `' && (curl -L -s -o '` + localPath + `' '` + url + `' || wget -q -O '` + localPath + `' '` + url + `')"]
                                              }
                                              `, root, "DownloadProcess_" + wallpaperId);
+    downloadProcess.command = ["curl.exe", "-L", "-s", "-f", "--create-dirs", "-o", localPath, url];
 
     downloadProcess.exited.connect(function (exitCode) {
       if (exitCode === 0) {
