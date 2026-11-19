@@ -277,13 +277,13 @@ SmartPanel {
       return [];
 
     if (appData.toplevels && appData.toplevels.length > 0) {
-      return appData.toplevels.filter(toplevel => toplevel && (!Settings.data.dock.onlySameOutput || !toplevel.screens || toplevel.screens.includes(screen)));
+      return appData.toplevels.filter(toplevel => toplevel && (!Settings.data.dock.onlySameOutput || !toplevel.screens || toplevel.screens.length === 0 || toplevel.screens.includes(screen)));
     }
 
     if (!appData.toplevel)
       return [];
 
-    if (Settings.data.dock.onlySameOutput && appData.toplevel.screens && !appData.toplevel.screens.includes(screen))
+    if (Settings.data.dock.onlySameOutput && appData.toplevel.screens && appData.toplevel.screens.length > 0 && !appData.toplevel.screens.includes(screen))
       return [];
 
     return [appData.toplevel];
@@ -375,7 +375,8 @@ SmartPanel {
         if (processedToplevels.has(toplevel)) {
           return;
         }
-        if (Settings.data.dock.onlySameOutput && toplevel.screens && !toplevel.screens.includes(screen)) {
+        // Port: waku's Toplevel.screens is always empty; empty means unknown (see Dock.qml).
+        if (Settings.data.dock.onlySameOutput && toplevel.screens && toplevel.screens.length > 0 && !toplevel.screens.includes(screen)) {
           return;
         }
         combined.push({

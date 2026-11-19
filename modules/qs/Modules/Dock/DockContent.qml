@@ -469,13 +469,9 @@ Item {
               }
             }
 
-            // Listen for the toplevel being closed
-            Connections {
-              target: modelData?.toplevel
-              function onClosed() {
-                Qt.callLater(dockRoot.updateDockApps);
-              }
-            }
+            // Port: upstream listened for the toplevel's closed() signal here. waku's Toplevel has
+            // none (a closed window simply leaves ToplevelManager.toplevels), so the Connections
+            // only logged a warning per icon; Dock.qml already rebuilds on that list changing.
 
             // Draggable container for the icon
             Item {

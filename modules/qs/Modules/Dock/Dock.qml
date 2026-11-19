@@ -400,13 +400,13 @@ Loader {
           return [];
 
         if (appData.toplevels && appData.toplevels.length > 0) {
-          return appData.toplevels.filter(toplevel => toplevel && (!Settings.data.dock.onlySameOutput || !toplevel.screens || toplevel.screens.includes(modelData)));
+          return appData.toplevels.filter(toplevel => toplevel && (!Settings.data.dock.onlySameOutput || !toplevel.screens || toplevel.screens.length === 0 || toplevel.screens.includes(modelData)));
         }
 
         if (!appData.toplevel)
           return [];
 
-        if (Settings.data.dock.onlySameOutput && appData.toplevel.screens && !appData.toplevel.screens.includes(modelData))
+        if (Settings.data.dock.onlySameOutput && appData.toplevel.screens && appData.toplevel.screens.length > 0 && !appData.toplevel.screens.includes(modelData))
           return [];
 
         return [appData.toplevel];
@@ -498,7 +498,10 @@ Loader {
             if (processedToplevels.has(toplevel)) {
               return; // Already processed this toplevel instance
             }
-            if (Settings.data.dock.onlySameOutput && toplevel.screens && !toplevel.screens.includes(modelData)) {
+            // Port: waku's Toplevel.screens is always empty (it maps no window to a screen), so an
+            // empty list means "unknown", not "on no screen". Treating it as a mismatch filtered out
+            // every window and, with no pinned apps, left the dock with nothing to show.
+            if (Settings.data.dock.onlySameOutput && toplevel.screens && toplevel.screens.length > 0 && !toplevel.screens.includes(modelData)) {
               return; // Filtered out by onlySameOutput setting
             }
             combined.push({
@@ -743,7 +746,7 @@ Loader {
                   panel.open();
                 return;
               }
-              if (hidden) {
+              if (root.hidden) {
                 showTimer.start();
               }
             }
@@ -756,7 +759,7 @@ Loader {
                 if (!dockHovered && !anyAppHovered && !menuHovered) {
                   hideTimer.restart();
                 }
-              } else if (!hidden && !dockHovered && !anyAppHovered && !menuHovered) {
+              } else if (!root.hidden && !dockHovered && !anyAppHovered && !menuHovered) {
                 hideTimer.restart();
               }
             }
@@ -787,6 +790,11 @@ Loader {
           WlrLayershell.layer: WlrLayer.Top
           WlrLayershell.exclusionMode: ExclusionMode.Ignore
           WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
+          // Port: the indicator only draws; the mouse goes through it to the peek window below.
+          // waku stacks Top and Overlay alike (topmost, raised when shown), so this window, shown
+          // each time the dock hides, ended up above the peek strip it overlaps and took the
+          // hover, and the auto-hidden dock never opened.
+          mask: Region {}
           implicitHeight: isVertical ? peekEdgeLength : indicatorThickness
           implicitWidth: isVertical ? indicatorThickness : peekEdgeLength
 
@@ -849,12 +857,15 @@ Loader {
           // Slide animation: content slides inside a fixed window, no margin animation.
           // Only reserve extra space for sliding when auto-hide is enabled
           property int slideDistance: autoHide ? ((isVertical ? dockContainerWrapper.contentWidth : dockContainerWrapper.contentHeight) + floatingMargin + 10) : 0
-          property real slideOffset: hidden ? slideDistance : 0
+          // Port: `root.hidden`, not `hidden`. waku's window type has a `hidden()` signal, so a bare
+          // `hidden` in here is that function (always truthy): the content stayed slid off-screen
+          // and the auto-hidden dock never showed.
+          property real slideOffset: root.hidden ? slideDistance : 0
 
           Behavior on slideOffset {
             NumberAnimation {
-              duration: hidden ? hideAnimationDuration : showAnimationDuration
-              easing.type: hidden ? Easing.InCubic : Easing.OutCubic
+              duration: root.hidden ? hideAnimationDuration : showAnimationDuration
+              easing.type: root.hidden ? Easing.InCubic : Easing.OutCubic
             }
           }
 
