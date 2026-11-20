@@ -12,6 +12,7 @@
 import QtQuick 6.10
 import Quickshell
 import waku.services as S
+import waku.widgets as W
 
 // Commons & Services
 import qs.Commons
@@ -54,6 +55,8 @@ ShellRoot {
     S.Tiling.layout = "mainStack";
     S.Tiling.gap = 8;
     S.Tiling.ratio = 0.5;
+    // Drag a tile by its title bar onto another to swap them; hold Ctrl at the release to float it.
+    S.Tiling.dragAction = "swap";
     S.Tiling.enabled = true;
     S.Tiling.rules = [ 
       { process: "OUTLOOK.EXE", title: " - (Message|Meeting|Appointment|Contact|Task)( \\(|$)", action: "float" },
@@ -162,6 +165,12 @@ ShellRoot {
       // Shared screen detector for IPC
       CurrentScreenDetector {
         id: screenDetector
+      }
+
+      // Where a tile dragged by its title bar will land, in the colours of the shell.
+      W.TilingDropIndicator {
+        color: Color.mPrimary
+        radius: Style.radiusS
       }
 
       // IPCService is a singleton, initialized via init() in deferred services block
