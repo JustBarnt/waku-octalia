@@ -512,7 +512,10 @@ Item {
                            // Use Qt.callLater to ensure menu dimensions are calculated
                            Qt.callLater(calculateAndShow);
                          } else {
-                           Logger.d("Tray", "No menu available for", modelData.id, "or trayMenu not set");
+                           // Windows tray icons have no menu to draw here: the program shows its
+                           // own when waku sends it the right click (display(); the window and
+                           // position are not used on Windows).
+                           modelData.display(null, 0, 0);
                          }
                        }
                      }
