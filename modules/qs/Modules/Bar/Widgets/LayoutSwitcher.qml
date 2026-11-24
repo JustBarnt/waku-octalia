@@ -5,7 +5,8 @@ import qs.Widgets
 import waku.services as S
 
 // Windows port: the layout of waku's built-in tiler for the focused workspace (each desktop and
-// monitor keeps its own). Click: next layout. Right click: previous. Hidden while the tiler is off.
+// monitor keeps its own). Click: next layout. Right click: a menu of every layout, the current one
+// checked. Middle click: previous. Hidden while the tiler is off.
 NIconButton {
   id: root
 
@@ -53,6 +54,27 @@ NIconButton {
   border.color: Style.capsuleBorderColor
   border.width: Style.capsuleBorderWidth
 
+  NPopupContextMenu {
+    id: contextMenu
+
+    // In the order waku cycles through them; the current one has a check instead of its icon.
+    model: S.Tiling.layouts.map(name => {
+                                  const entry = root.layouts[name] || ({ "icon": "layout", "title": name });
+                                  return {
+                                    "label": entry.title,
+                                    "action": name,
+                                    "icon": name === root.layoutName ? "check" : entry.icon
+                                  };
+                                })
+
+    onTriggered: action => {
+                   contextMenu.close();
+                   PanelService.closeContextMenu(root.screen);
+                   S.Tiling.setLayout(action);
+                 }
+  }
+
   onClicked: S.Tiling.cycleLayout(1)
-  onRightClicked: S.Tiling.cycleLayout(-1)
+  onRightClicked: PanelService.showContextMenu(contextMenu, root, root.screen)
+  onMiddleClicked: S.Tiling.cycleLayout(-1)
 }
