@@ -53,7 +53,7 @@ ShellRoot {
 
     // The built-in waku tiler is the default on every port (keys.conf drives it).
     S.Tiling.layout = "mainStack";
-    S.Tiling.gap = 8;
+    S.Tiling.gap = 4;
     S.Tiling.ratio = 0.5;
     // Drag a tile by its title bar onto another to swap them; hold Ctrl at the release to float it.
     S.Tiling.dragAction = "swap";
@@ -62,6 +62,8 @@ ShellRoot {
       { process: "OUTLOOK.EXE", title: " - (Message|Meeting|Appointment|Contact|Task)( \\(|$)", action: "float" },
       { process: "Playrooms.exe", action: "tile" },
       { process: "MoonSweepers.exe", action: "tile" },
+      { process: "devenv.exe", action: "tile" },
+      { process: "TortoiseProc.exe", title: "Checkout|URL|Log Messages|TortoiseSVN|Revision Graph", action: "float" },
       // Zen puts back the size it saved when it last closed, after it opens: place it again once
       // it is done (needs waku with the settle rule action).
       { process: "zen.exe", action: "settle" },
