@@ -6,8 +6,8 @@
 param([switch]$DryRun)
 # The key handler goes first, so no key reaches a bar that is quitting.
 foreach ($keys in @(Get-CimInstance Win32_Process -Filter "Name='wakukeys.exe'" -ErrorAction SilentlyContinue)) {
-  if ($DryRun) { Write-Host "would stop wakukeys pid $($keys.ProcessId)"; continue }
-  Write-Host "stopping wakukeys pid $($keys.ProcessId)"
+  if ($DryRun) { Write-Host "would quit $($keys.Name) pid $($keys.ProcessId)"; continue }
+  Write-Host "quitting $($keys.Name) pid $($keys.ProcessId)"
   & $keys.ExecutablePath stop | Out-Null
   $kp = Get-Process -Id $keys.ProcessId -ErrorAction SilentlyContinue
   if ($kp -and -not $kp.WaitForExit(5000)) { Stop-Process -Id $keys.ProcessId -Force }
@@ -17,8 +17,8 @@ if ($running.Count -eq 0) { Write-Host 'no waku is running'; return }
 foreach ($proc in $running) {
   $config = if ($proc.CommandLine -match '--config-home\s+(?:"([^"]+)"|(\S+))') { if ($Matches[1]) { $Matches[1] } else { $Matches[2] } } else { '' }
   $wakuc = Join-Path (Split-Path $proc.ExecutablePath) 'wakuc.exe'
-  if ($DryRun) { Write-Host "would quit pid $($proc.ProcessId) (config home $config)"; continue }
-  Write-Host "quitting pid $($proc.ProcessId) (config home $config)"
+  if ($DryRun) { Write-Host "would quit $($proc.Name) pid $($proc.ProcessId) (config home $config)"; continue }
+  Write-Host "quitting $($proc.Name) pid $($proc.ProcessId) (config home $config)"
   if ($config -and (Test-Path $wakuc)) { & $wakuc --config-home $config quit | Out-Null }
   $p = Get-Process -Id $proc.ProcessId -ErrorAction SilentlyContinue
   if ($p -and -not $p.WaitForExit(10000)) {

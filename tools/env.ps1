@@ -22,6 +22,13 @@ function Find-Waku([string]$Waku) {
   return ''
 }
 
+function Find-WakuKeys([string]$WakuKeys) {
+  if ($WakuKeys) { return $WakuKeys }
+  $found = Get-Command wakukeys.exe -ErrorAction SilentlyContinue
+  if ($found) { return $found.Source }
+  return ''
+}
+
 # Start-Process joins an argument array with spaces and quotes nothing; quote what has a space.
 function Join-Arguments([string[]]$Arguments) {
   ($Arguments | ForEach-Object { if ($_ -match '\s') { '"' + $_ + '"' } else { $_ } }) -join ' '

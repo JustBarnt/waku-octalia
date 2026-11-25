@@ -9,7 +9,9 @@
 # Without -Watch, `wakuc --config-home <this folder> reload` applies an edit.
 param(
   [string]$Waku,
+  [string]$WakuKeys,
   [switch]$Log,
+  [switch]$LogKeys,
   [switch]$Watch,
   [switch]$DryRun
 )
@@ -20,20 +22,31 @@ $ErrorActionPreference = 'Stop'
 & (Join-Path $PSScriptRoot 'stop.ps1') -DryRun:$DryRun
 
 $Waku = Find-Waku $Waku
+$WakuKeys = Find-WakuKeys $WakuKeys
+$WakuKeysFlags = @('--config-home', $OctaliaRoot, '--log-file', (Join-Path $OctaliaRoot 'logs\wakukeys.log'));
 if (-not $Waku -or -not (Test-Path $Waku)) {
   throw "engine not found: '$Waku' (pass -Waku, set WAKU_EXE, or put waku.exe on PATH)"
 }
 $flags = @('--config-home', $OctaliaRoot) + $OctaliaFlags
 if ($Log) { $flags += @('--log-file', (Join-Path $OctaliaRoot 'logs\waku.log')) }
 if ($Watch) { $flags += '--watch' }
+if ($LogKeys) { $flags += '--no-keys' }
 
 if ($DryRun) {
   foreach ($e in $OctaliaEnv.GetEnumerator()) { Write-Host "would set $($e.Key)=$($e.Value)" }
   Write-Host "would start: `"$Waku`" $(Join-Arguments $flags)"
+  if ($LogKeys) {
+    Write-Host "would start: `"$WakuKeys`"  $(Join-Arguments $WakuKeysFlags)"
+  }
   return
 }
 foreach ($e in $OctaliaEnv.GetEnumerator()) { Set-Item -Path "env:$($e.Key)" -Value $e.Value }
 New-Item -ItemType Directory -Force @($OctaliaEnv.Values) | Out-Null
-if ($Log) { New-Item -ItemType Directory -Force (Join-Path $OctaliaRoot 'logs') | Out-Null }
+if ($Log -or $LogKeys) { New-Item -ItemType Directory -Force (Join-Path $OctaliaRoot 'logs') | Out-Null }
 $p = Start-Process -FilePath $Waku -PassThru -WorkingDirectory (Split-Path $Waku) -ArgumentList (Join-Arguments $flags)
+if ($LogKeys) { 
+  $p2 = Start-Process -FilePath $WakuKeys -PassThru -WorkingDirectory (Split-Path $WakuKeys) -ArgumentList (Join-Arguments $WakuKeysFlags) 
+  Write-Host "logging wakukeys, pid $($p2.Id)"
+}
 Write-Host "octalia started, pid $($p.Id)"
+
